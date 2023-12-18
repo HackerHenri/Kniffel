@@ -8,7 +8,7 @@ function rollDices() {
       if (isdicelocked[i] == false) {
         var rnd = Math.floor(Math.random() * 6) + 1;
         diceScore[i] = rnd;
-        var rnd_str = "url('dice" + rnd.toString() + ".png')";
+        var rnd_str = "url('images/dice" + rnd.toString() + ".png')";
         document.getElementById("dice" + (i + 1)).style.backgroundImage = rnd_str;
       }
     }
@@ -29,14 +29,14 @@ function rollDices() {
   }
 
   function holdDice(buttonId){
-    button = document.getElementById("holdButton" + (buttonId + 1));
+    button = document.getElementById("dice" + (buttonId + 1));
     if (isdicelocked[buttonId] == false){
       isdicelocked[buttonId] = true;
-      document.getElementById("holdButton" + (buttonId + 1)).style.backgroundColor = "red";
+      document.getElementById("dice" + (buttonId + 1)).style.backgroundImage = "url('images/dice"+ diceScore[buttonId] + "_marked.png')";
     }
     else{
       isdicelocked[buttonId] = false;
-      document.getElementById("holdButton" + (buttonId + 1)).style.backgroundColor = "grey";
+      document.getElementById("dice" + (buttonId + 1)).style.backgroundImage = "url('images/dice"+ diceScore[buttonId] + ".png')";
     }
   }
 

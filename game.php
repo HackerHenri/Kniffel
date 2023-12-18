@@ -15,22 +15,22 @@
             background-size: contain;
         }
         #dice1 {
-            background-image: url("dice1.png");
+            background-image: url("images/dice1.png");
         }
         #dice2 {
-            background-image: url("dice2.png");
+            background-image: url("images/dice2.png");
         }
         #dice3 {
-            background-image: url("dice3.png");
+            background-image: url("images/dice3.png");
         }
         #dice4 {
-            background-image: url("dice4.png");
+            background-image: url("images/dice4.png");
         }
         #dice5 {
-            background-image: url("dice5.png");
+            background-image: url("images/dice5.png");
         }
         #dice6 {
-            background-image: url("dice6.png");
+            background-image: url("images/dice6.png");
         }
         table, th, tr, td {
           border: 1px solid black;
@@ -49,19 +49,19 @@
     $username = "root";
     $password = "";
     // Create connection
-    $conn = mysqli_connect($servername, $username, $password, "kniffel");
+    // $conn = mysqli_connect($servername, $username, $password, "kniffel");
 
     // Check connection
-    if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-    }
-    $sql = "INSERT INTO `kniffel`.`Meta` (`Spieler1`, `Spieler2`) VALUES ('x', 'y');";
-    $result = mysqli_query($conn, $sql);
-    if ($result) {
-    } else {
-        echo "Error: " . $sql . "<br>" . mysqli_error($conn);
-        }
-    $conn->close();
+    // if ($conn->connect_error) {
+    // die("Connection failed: " . $conn->connect_error);
+    // }
+    // $sql = "INSERT INTO `kniffel`.`Meta` (`Spieler1`, `Spieler2`) VALUES ('x', 'y');";
+    // $result = mysqli_query($conn, $sql);
+    // if ($result) {
+    // } else {
+    //     echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+    //     }
+    // $conn->close();
 
     ?>
 
@@ -76,20 +76,8 @@
         echo "<h2 id='player'>$active_player ist am Zug!</h2>";
         echo "<h2>$spieler1 vs. $spieler2</h2>";
     ?>
-    <?php
-        $timestamp = time();
-        $datum = date("d.m.Y - H:i", $timestamp);
-    ?>
-    <?php
-            $f = fopen("/Applications/XAMPP/xamppfiles/htdocs/log.txt", "a");
-            if ($f) {
-                fwrite($f, "[$datum] $active_player ist am Zug! \n");
-                fclose($f);
-            }
-            else {
-                echo "Error opening file!";
-            }
-    ?>
+
+
     <?php
         $score1 = array(
             0 => 0,
@@ -137,33 +125,27 @@
         <main id="boxes" style="display: flex; flex-direction: row;"> 
         <div style="display: flex; flex-direction: column;">
             <div id="dice1_box" style="display: flex; flex-direction: row;">
-                <p>Würfel 1: <span class="dice" id="dice1"></span></p>
-                <button class="holdButton" id="holdButton1" style="width:1000px;heigth:25px;" onclick="holdDice(0)">Halten</button>
+                <button class="dice" id="dice1" onclick="holdDice(0)"></button>
             </div>
 
             <div style="display: flex; flex-direction: row;">
-                <p>Würfel 2: <span class="dice" id="dice2"></span></p>
-                <button  class="holdButton" id="holdButton2"style="width:1000px;heigth:1000px;" onclick="holdDice(1)">Halten</button>
+                <button class="dice" id="dice2" onclick="holdDice(1)"></button>
             </div>
 
             <div style="display: flex; flex-direction: row;">
-                <p>Würfel 3: <span class="dice" id="dice3"></span></p>
-                <button  class="holdButton" id="holdButton3" style="width:1000px;heigth:1000px;" onclick="holdDice(2)">Halten</button>
+                <button class="dice" id="dice3" onclick="holdDice(2)"></button>
             </div>
 
             <div style="display: flex; flex-direction: row;">
-                <p>Würfel 4: <span class="dice" id="dice4"></span></p>
-                <button  class="holdButton" id="holdButton4" style="width:1000px;heigth:1000px;" onclick="holdDice(3)">Halten</button>
+                <button class="dice" id="dice4" onclick="holdDice(3)"></button>
             </div>
 
             <div  style="display: flex; flex-direction: row;">
-                <p>Würfel 5: <span class="dice" id="dice5"></span></p>
-                <button  class="holdButton" id="holdButton5" style="width:1000px;heigth:1000px;" onclick="holdDice(4)">Halten</button>
+                <button class="dice" id="dice5" onclick="holdDice(4)"></button>
             </div>
 
             <div style="display: flex; flex-direction: row;">
-                <p>Würfel 6: <span class="dice" id="dice6"></span></p>
-                <button class="holdButton" id="holdButton6" style="width:1000px;heigth:1000px;" onclick="holdDice(5)">Halten</button>
+                <button class="dice" id="dice6" onclick="holdDice(5)"></button>
             </div>
         </div>
 
