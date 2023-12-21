@@ -29,9 +29,7 @@
         #dice5 {
             background-image: url("images/dice5.png");
         }
-        #dice6 {
-            background-image: url("images/dice6.png");
-        }
+
         table, th, tr, td {
           border: 1px solid black;
           border-collapse: collapse;
@@ -124,28 +122,25 @@
         <main id="boxes" style="display: flex; flex-direction: row;"> 
         <div style="display: flex; flex-direction: column;">
             <div id="dice1_box" style="display: flex; flex-direction: row;">
-                <button class="dice" id="dice1" onclick="holdDice(0)"></button>
+                <button class="dice" id="dice1" onclick="holdDice(0)" disabled></button>
             </div>
 
             <div style="display: flex; flex-direction: row;">
-                <button class="dice" id="dice2" onclick="holdDice(1)"></button>
+                <button class="dice" id="dice2" onclick="holdDice(1)" disabled></button>
             </div>
 
             <div style="display: flex; flex-direction: row;">
-                <button class="dice" id="dice3" onclick="holdDice(2)"></button>
+                <button class="dice" id="dice3" onclick="holdDice(2)" disabled></button>
             </div>
 
             <div style="display: flex; flex-direction: row;">
-                <button class="dice" id="dice4" onclick="holdDice(3)"></button>
+                <button class="dice" id="dice4" onclick="holdDice(3)" disabled></button>
             </div>
 
             <div  style="display: flex; flex-direction: row;">
-                <button class="dice" id="dice5" onclick="holdDice(4)"></button>
+                <button class="dice" id="dice5" onclick="holdDice(4)" disabled></button>
             </div>
 
-            <div style="display: flex; flex-direction: row;">
-                <button class="dice" id="dice6" onclick="holdDice(5)"></button>
-            </div>
         </div>
 
         <div class="ergebnis" style="display: flex; flex-direction: column; justify-content: space-around;">
@@ -201,22 +196,29 @@
                             else{
                                 $new_i = $i + 1;
                             }
-                            echo "<td><button id='score_button$new_i' onclick='selectResult($new_i)'>Wählen</button></td>";
+                            echo "<td><button id='score_button$new_i' onclick='selectResult($new_i)' disabled>Wählen</button></td>";
                         } else {
                             echo "<td></td>";
                         }
                     }
                     ?>
+                </tr>
+                <tr>
+                    <td id=dropButtons>Streichen</td>
                     <?php
-                        $var = $_POST["score1"];
-                        if (isset($_POST["score1"])) {
-                            echo $var;
+                    for ($i = 0; $i < 18; $i++) {
+                        if ($i != 6 && $i != 7 && $i != 8 && $i != 16 && $i != 17) {
+                            if($i > 6){
+                                $new_i = $i - 2;
+                            }
+                            else{
+                                $new_i = $i + 1;
+                            }
+                            echo "<td><button id='drop_button$new_i' onclick='dropResult($new_i)' disabled>Streichen</button></td>";
+                        } else {
+                            echo "<td></td>";
                         }
-                     
-                        // for ($i = 0; $i < 18; $i++) {
-                        //     echo "<td id='ergebnis_$i'><form method='post' action='game.php'>  <input type='hidden' name='score' value='3487'>
-                        //     <button type='submit'>Wählen</button></form></td>";
-                        // }
+                    }
                     ?>
             </tbody>
             </table>
