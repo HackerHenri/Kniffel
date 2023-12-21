@@ -67,17 +67,12 @@
 
     <h1>Kniffelspaß!</h1>
     <?php
-        $spieler1 = 'a';
-        $spieler2 = 'b';
-        # spieler müssen hier aus der Datenbank geladen werden
+        $spieler1 = 'player1';  // spieler müssen hier aus der Datenbank geladen werden
+        $spieler2 = 'player2';
         echo "<script>var spieler1 = '$spieler1';</script>";
         echo "<script>var spieler2 = '$spieler2';</script>";
-        
-        $active_player = $_GET["activePlayer"];
-        if ($active_player == "") {
-            $active_player = $spieler1;
-        }
-        echo "<h2 id='player'>$active_player ist am Zug!</h2>";
+
+        echo "<h2 id='player'>$spieler1 ist am Zug!</h2>";
         echo "<h2>$spieler1 vs. $spieler2</h2>";
     ?>
 
@@ -197,10 +192,26 @@
                 </tr>
                 <tr>
                     <td id=ergebnisButtons>Wählen</td>
-                    <td id='ergebnis1'><form method='post'>  <input type='hidden' name='score1' value='3487'>
-                            <button type='submit'>Wählen</button></form></td>
+                    <?php
+                    for ($i = 0; $i < 18; $i++) {
+                        if ($i != 6 && $i != 7 && $i != 8 && $i != 16 && $i != 17) {
+                            if($i > 6){
+                                $new_i = $i - 2;
+                            }
+                            else{
+                                $new_i = $i + 1;
+                            }
+                            echo "<td><button id='score_button$new_i' onclick='selectResult($new_i)'>Wählen</button></td>";
+                        } else {
+                            echo "<td></td>";
+                        }
+                    }
+                    ?>
                     <?php
                         $var = $_POST["score1"];
+                        if (isset($_POST["score1"])) {
+                            echo $var;
+                        }
                      
                         // for ($i = 0; $i < 18; $i++) {
                         //     echo "<td id='ergebnis_$i'><form method='post' action='game.php'>  <input type='hidden' name='score' value='3487'>
@@ -209,7 +220,7 @@
                     ?>
             </tbody>
             </table>
-            <button style="width:25%;heigth:1000px;" onclick="rollDices()">Würfeln</button>
+            <button id="roll" style="width:25%;heigth:1000px;" onclick="rollDices()">Würfeln</button>
             <button style="width:25%;heigth:1000px;" onclick="endRound()">Runde beenden!</button>
         </div>
         </main>
