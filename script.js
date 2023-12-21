@@ -3,6 +3,7 @@ var player1score = [0,0,0,0,0,0,0,0,0,0,0,0,0];
 var rollCounter = 0;
 var player2score = [0,0,0,0,0,0,0,0,0,0,0,0,0];
 var diceScore = [0,0,0,0,0,0];
+var activePlayer = 'a';
 function rollDices() {
     for (var i = 0; i < isdicelocked.length; i++) {
       if (isdicelocked[i] == false) {
@@ -12,19 +13,22 @@ function rollDices() {
         document.getElementById("dice" + (i + 1)).style.backgroundImage = rnd_str;
       }
     }
+    console.log(activePlayer);
     rollCounter++;
     if (rollCounter == 3){
       rollCounter = 0;
       for (var i = 0; i < isdicelocked.length; i++) {
         isdicelocked[i] = false;
-        document.getElementById("holdButton" + (i + 1)).style.backgroundColor = "grey";
       }
-      if (document.getElementById("player").innerHTML == spieler1 + " ist am Zug!"){
-        document.getElementById("player").innerHTML = spieler2 + " ist am Zug!";
+      if (activePlayer == spieler1){
+        activePlayer = spieler2;
+        console.log(spieler1);
       }
       else{
-        document.getElementById("player").innerHTML = spieler1 + " ist am Zug!";
+        activePlayer = spieler1;
+        console.log(spieler2);
       }
+      window.location.href = "game.php?activePlayer=" + activePlayer;
     }
   }
 

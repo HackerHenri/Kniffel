@@ -67,12 +67,16 @@
 
     <h1>Kniffelspaß!</h1>
     <?php
-        $spieler1 = $_POST["spieler1"];
-        $spieler2 = $_POST["spieler2"];
+        $spieler1 = 'a';
+        $spieler2 = 'b';
+        # spieler müssen hier aus der Datenbank geladen werden
         echo "<script>var spieler1 = '$spieler1';</script>";
         echo "<script>var spieler2 = '$spieler2';</script>";
-
-        $active_player = $spieler1;
+        
+        $active_player = $_GET["activePlayer"];
+        if ($active_player == "") {
+            $active_player = $spieler1;
+        }
         echo "<h2 id='player'>$active_player ist am Zug!</h2>";
         echo "<h2>$spieler1 vs. $spieler2</h2>";
     ?>
