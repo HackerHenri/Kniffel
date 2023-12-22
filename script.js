@@ -8,16 +8,17 @@ var diceScore = [0,0,0,0,0];
 var activePlayer = 1;
 var activePlayerName = "";
 
-
 function rollDices() {
-    if (activePlayerName == ""){
-      activePlayerName = spieler1;
-      activePlayer = 1;
-      for (var i = 0; i < isdicelocked.length; i++) { 
-        document.getElementById("dice"+(i+1)).disabled = false;
-      }
-    }
-    
+    // if (activePlayerName == ""){
+    //   activePlayerName = spieler1;
+    //   activePlayer = 1;
+    //   for (var i = 0; i < isdicelocked.length; i++) {
+    //     document.getElementById("dice"+(i+1)).disabled = false;
+    //   }
+    // }
+  for (var i = 0; i < isdicelocked.length; i++) {
+    document.getElementById("dice"+(i+1)).disabled = false;
+  }
 
     for (var i = 0; i < isdicelocked.length; i++) {
       if (isdicelocked[i] == false) {
@@ -181,6 +182,7 @@ function rollDices() {
     else{
       player2locked[field-1] = 1;
     }
+
     nextPlayer();
   }
 
@@ -363,16 +365,21 @@ function rollDices() {
     if (activePlayer == 1){
       activePlayer = 2;
       activePlayerName = spieler2;
-      document.getElementById("player").innerHTML = spieler2 + " ist am Zug!";
+      // document.getElementById("player").innerHTML = spieler2 + " ist am Zug!";
       console.log(spieler1);
     }
     else{
       activePlayer = 1;
       activePlayerName = spieler1;
-      document.getElementById("player").innerHTML = spieler1 + " ist am Zug!";
+      // document.getElementById("player").innerHTML = spieler1 + " ist am Zug!";
       console.log(spieler2);
     }
     document.getElementById("roll").disabled = false;
+
+    // Ralode game.php
+    location.reload(true)
+
+
   }
 
   function checkSpecialScoreButtons(){

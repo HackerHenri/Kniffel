@@ -42,81 +42,202 @@
     </style>
 </head>
 <body>
-    <?php
-    $servername = "localhost";
-    $username = "root";
-    $password = "";
-    // Create connection
-    // $conn = mysqli_connect($servername, $username, $password, "kniffel");
-
-    // Check connection
-    // if ($conn->connect_error) {
-    // die("Connection failed: " . $conn->connect_error);
-    // }
-    // $sql = "INSERT INTO `kniffel`.`Meta` (`Spieler1`, `Spieler2`) VALUES ('x', 'y');";
-    // $result = mysqli_query($conn, $sql);
-    // if ($result) {
-    // } else {
-    //     echo "Error: " . $sql . "<br>" . mysqli_error($conn);
-    //     }
-    // $conn->close();
-
-    ?>
 
     <h1>Kniffelspaß!</h1>
-    <?php
-        $spieler1 = 'player1';  // spieler müssen hier aus der Datenbank geladen werden
-        $spieler2 = 'player2';
-        echo "<script>var spieler1 = '$spieler1';</script>";
-        echo "<script>var spieler2 = '$spieler2';</script>";
 
-        echo "<h2 id='player'>$spieler1 ist am Zug!</h2>";
-        echo "<h2>$spieler1 vs. $spieler2</h2>";
+    <?php
+        $servername = "localhost";
+        $username = "root";
+        $password = "";
+
+        // Create connection
+         $conn = mysqli_connect($servername, $username, $password, "kniffel");
+
+        $sql = "SELECT * FROM `score` WHERE 1";
+        $result = mysqli_query($conn, $sql);
+        $row = mysqli_fetch_assoc($result);
+        $player1 = $row['playername'];
+
+        $row = mysqli_fetch_assoc($result);
+        $player2 = $row['playername'];
+
+        // get second last entry for active player
+        $sql = "SELECT * FROM `score` ORDER BY `score`.`id` DESC LIMIT 1, 1";
+        $result = mysqli_query($conn, $sql);
+        $row = mysqli_fetch_assoc($result);
+        $activePlayer = $row['playername'];
+
+
+        // ##### Get Score from Player1 #####
+        $sql = "SELECT * FROM `score` WHERE `playername` = '$player1' ORDER BY `score`.`id` DESC LIMIT 1";
+        $result = mysqli_query($conn, $sql);
+        $row = mysqli_fetch_assoc($result);
+
+        $score1 = array(
+            0 => $row['1er'],
+            1 => $row['2er'],
+            2 => $row['3er'],
+            3 => $row['4er'],
+            4 => $row['5er'],
+            5 => $row['6er'],
+            6 => $row['summe_oben'],
+            7 => $row['bonus'],
+            8 => $row['gesamt_oben'],
+            9 => $row['3er_pasch'],
+            10 => $row['4er_pasch'],
+            11 => $row['full_house'],
+            12 => $row['kleine_strasse'],
+            13 => $row['grosse_strasse'],
+            14 => $row['kniffel'],
+            15 => $row['chance'],
+            16 => $row['gesamt_unten'],
+            17 => $row['gesamt'],
+        );
+        for ($i = 0; $i < 18; $i++) {
+            if ($score1[$i] == NULL) {
+                $score1[$i] = 0;
+            }
+        }
+
+        $scoreScript = array(
+            0 => $row['1er'],
+            1 => $row['2er'],
+            2 => $row['3er'],
+            3 => $row['4er'],
+            4 => $row['5er'],
+            5 => $row['6er'],
+            6 => $row['3er_pasch'],
+            7 => $row['4er_pasch'],
+            8 => $row['full_house'],
+            9 => $row['kleine_strasse'],
+            10 => $row['grosse_strasse'],
+            11 => $row['kniffel'],
+            12 => $row['chance'],
+        );
+        for ($i = 0; $i < 13; $i++) {
+            if ($scoreScript[$i] == NULL) {
+                $scoreScript[$i] = 0;
+            }
+            else{
+                $scoreScript[$i] = (int)$scoreScript[$i];
+            }
+        }
+        $js_array = json_encode($scoreScript);
+        echo"<script>var player1score = $js_array;</script>";
+
+
+        // ##### Get Score from Player2 #####
+        $sql = "SELECT * FROM `score` WHERE `playername` = '$player2' ORDER BY `score`.`id` DESC LIMIT 1";
+        $result = mysqli_query($conn, $sql);
+        $row = mysqli_fetch_assoc($result);
+
+        $score2 = array(
+            0 => $row['1er'],
+            1 => $row['2er'],
+            2 => $row['3er'],
+            3 => $row['4er'],
+            4 => $row['5er'],
+            5 => $row['6er'],
+            6 => $row['summe_oben'],
+            7 => $row['bonus'],
+            8 => $row['gesamt_oben'],
+            9 => $row['3er_pasch'],
+            10 => $row['4er_pasch'],
+            11 => $row['full_house'],
+            12 => $row['kleine_strasse'],
+            13 => $row['grosse_strasse'],
+            14 => $row['kniffel'],
+            15 => $row['chance'],
+            16 => $row['gesamt_unten'],
+            17 => $row['gesamt'],
+        );
+        for ($i = 0; $i < 18; $i++) {
+            if ($score2[$i] == NULL) {
+                $score2[$i] = 0;
+            }
+        }
+
+        $scoreScript = array(
+            0 => $row['1er'],
+            1 => $row['2er'],
+            2 => $row['3er'],
+            3 => $row['4er'],
+            4 => $row['5er'],
+            5 => $row['6er'],
+            6 => $row['3er_pasch'],
+            7 => $row['4er_pasch'],
+            8 => $row['full_house'],
+            9 => $row['kleine_strasse'],
+            10 => $row['grosse_strasse'],
+            11 => $row['kniffel'],
+            12 => $row['chance'],
+        );
+        for ($i = 0; $i < 13; $i++) {
+            if ($scoreScript[$i] == NULL) {
+                $scoreScript[$i] = 0;
+            }
+            else{
+                $scoreScript[$i] = (int)$scoreScript[$i];
+            }
+        }
+
+        // copy array to javascript and transfer to integer
+        $js_array = json_encode($scoreScript);
+        echo"<script>var player2score = $js_array;</script>";
+
+        // ##### Update Playernames in Script #####
+        echo"<script>var spieler1 = '$player1';</script>";
+        echo"<script>var spieler2 = '$player2';</script>";
+        echo"<script>var activePlayerName = '$activePlayer';</script>";
+
+        if ($activePlayer == $player1){
+            echo"<script>var activePlayer = 1;</script>";
+        }
+        else{
+            echo"<script>var activePlayer = 2;</script>";
+        }
+
+        // ##### Update Playernames in Script #####
+        echo "<h2 id='player'>$activePlayer ist am Zug!</h2>";
+        echo "<h2>$player1 vs. $player2</h2>";
+
+
+    // ##### Get All activeRound Values #####
+    $sql = "SELECT * FROM `activeround` WHERE 1";
+    $result = mysqli_query($conn, $sql);
+    $row = mysqli_fetch_assoc($result);
+
+    // Get dicelocked values
+    $dicelocked = array(
+        0 => (bool)$row['dicelocked1'],
+        1 => (bool)$row['dicelocked2'],
+        2 => (bool)$row['dicelocked3'],
+        3 => (bool)$row['dicelocked4'],
+        4 => (bool)$row['dicelocked5'],
+    );
+    $js_array = json_encode($dicelocked);
+    echo"<script>var isdicelocked = $js_array;</script>";
+
+    // get rollcounter value
+    $rollCounter = (int)$row['rollCounter'];
+    echo "<script>var rollCounter = $rollCounter;</script>";
+
+    // get diceScore value
+    $diceScore = array(
+        0 => (int)$row['diceScore1'],
+        1 => (int)$row['diceScore2'],
+        2 => (int)$row['diceScore3'],
+        3 => (int)$row['diceScore4'],
+        4 => (int)$row['diceScore5'],
+    );
+    $js_array = json_encode($diceScore);
+    echo"<script>var diceScore = $js_array;</script>";
+
+    $conn->close();
+
     ?>
 
 
-    <?php
-        $score1 = array(
-            0 => 0,
-            1 => 0,
-            2 => 0,
-            3 => 0,
-            4 => 0,
-            5 => 0,
-            6 => 0,
-            7 => 0,
-            8 => 0,
-            9 => 0,
-            10 => 0,
-            11 => 0,
-            12 => 0,
-            13 => 0,
-            14 => 0,
-            15 => 0,
-            16 => 0,
-            17 => 0
-        );
-        $score2 = array(
-            0 => 0,
-            1 => 0,
-            2 => 0,
-            3 => 0,
-            4 => 0,
-            5 => 0,
-            6 => 0,
-            7 => 0,
-            8 => 0,
-            9 => 0,
-            10 => 0,
-            11 => 0,
-            12 => 0,
-            13 => 0,
-            14 => 0,
-            15 => 0,
-            16 => 0,
-            17 => 0
-        );
-        ?>
 
 
         <main id="boxes" style="display: flex; flex-direction: row;"> 
@@ -140,7 +261,6 @@
             <div  style="display: flex; flex-direction: row;">
                 <button class="dice" id="dice5" onclick="holdDice(4)" disabled></button>
             </div>
-
         </div>
 
         <div class="ergebnis" style="display: flex; flex-direction: column; justify-content: space-around;">

@@ -53,8 +53,28 @@
     $password = "";
     $conn = mysqli_connect($servername, $username, $password, "kniffel");
 
-    $sql = "INSERT INTO `score` (`playername`, `$field`, `summe_oben`, `bonus`, `gesamt_oben`, `gesamt_unten`, `gesamt`) VALUES ('$playerName', $scoreGet, $sumTop, $bonus, $totalTop, $sumBottom, $sumTotal)";
-    echo $sql;
+    // get last entry for incremente id
+    $sql = "SELECT * FROM `score` ORDER BY `score`.`id` DESC LIMIT 1";
     $result = mysqli_query($conn, $sql);
+    $row = mysqli_fetch_assoc($result);
+    $id = $row['id'];
+    $id++;
+
+    // duplicate second last entry for active player
+    $sql = "INSERT INTO `score` (`id`, `playername`, `1er`, `2er`, `3er`, `4er`, `5er`, `6er`, `summe_oben`, `bonus`, `gesamt_oben`, `3er_pasch`, `4er_pasch`, `full_house`, `kleine_strasse`, `grosse_strasse`, `kniffel`, `chance`, `gesamt_unten`, `gesamt`) SELECT $id, '$playerName', `1er`, `2er`, `3er`, `4er`, `5er`, `6er`, `summe_oben`, `bonus`, `gesamt_oben`, `3er_pasch`, `4er_pasch`, `full_house`, `kleine_strasse`, `grosse_strasse`, `kniffel`, `chance`, `gesamt_unten`, `gesamt` FROM `score` ORDER BY `score`.`id` DESC LIMIT 1, 1";
+    $result = mysqli_query($conn, $sql);
+
+    // update last entry with new score
+    $sql = "UPDATE `score` SET `$field` = $scoreGet, `summe_oben` = $sumTop, `bonus` = $bonus, `gesamt_oben` = $totalTop, `gesamt_unten` = $sumBottom, `gesamt` = $sumTotal WHERE `score`.`id` = $id";
+    $result = mysqli_query($conn, $sql);
+
+
+
+//    $sql = "UPDATE `score` (`id`, `playername`, `$field`, `summe_oben`, `bonus`, `gesamt_oben`, `gesamt_unten`, `gesamt`) VALUES ($id, '$playerName', $scoreGet, $sumTop, $bonus, $totalTop, $sumBottom, $sumTotal)";
+//    echo $sql;
+//    $result = mysqli_query($conn, $sql);
+
+    $conn->close();
+
 
 ?>
