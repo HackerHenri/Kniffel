@@ -29,32 +29,3 @@
 </body>
 
 </html>
-
-<?php
-  $spieler1 = $_POST["spieler1"];
-  $spieler2 = $_POST["spieler2"];
-
-  $servername = "localhost";
-    $username = "root";
-    $password = "";
-
-    // Create connection
-    $conn = mysqli_connect($servername, $username, $password, "kniffel");
-
-    // Check connection
-    if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-    }
-    // Delete all tasks
-    // $sql = 'DELETE * FROM score';
-
-    // // Enter Data
-    // $sql = "INSERT INTO `kniffel`.`Meta` (`Spieler1`, `Spieler2`) VALUES ('x', 'y');";
-    // $result = mysqli_query($conn, $sql);
-    // if ($result) {
-    // } else {
-    //     echo "Error: " . $sql . "<br>" . mysqli_error($conn);
-    //     }
-    $conn->close();
-
-?>
