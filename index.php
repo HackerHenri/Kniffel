@@ -14,7 +14,7 @@
   <h1 id="h1" class="item">Würfelspiel Kniffel</h1>
 
   <div class="container">
-  <form method="post" action="index.php">
+  <form method="post" action="initiate_game.php">
     <label class="item">Spielername 1:</label>
     <input class="item" type="text" name="spieler1" placeholder="Enter player 1 name">
     <br>
