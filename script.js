@@ -1,23 +1,15 @@
 var isdicelocked = [false, false, false, false, false];
-var player1score = [0,0,0,0,0,0,0,0,0,0,0,0,0];
-var player1locked = [0,0,0,0,0,0,0,0,0,0,0,0,0];
+var playerscore = [0,0,0,0,0,0,0,0,0,0,0,0,0];
+var buttonslocked = [0,0,0,0,0,0,0,0,0,0,0,0,0];
 var rollCounter = 0;
-var player2score = [0,0,0,0,0,0,0,0,0,0,0,0,0];
-var player2locked = [0,0,0,0,0,0,0,0,0,0,0,0,0];
 var diceScore = [0,0,0,0,0];
 var activePlayer = 1;
 var activePlayerName = "";
 
-
 function rollDices() {
-    if (activePlayerName == ""){
-      activePlayerName = spieler1;
-      activePlayer = 1;
-      for (var i = 0; i < isdicelocked.length; i++) { 
-        document.getElementById("dice"+(i+1)).disabled = false;
-      }
-    }
-    
+  for (var i = 0; i < isdicelocked.length; i++) {
+    document.getElementById("dice"+(i+1)).disabled = false;
+  }
 
     for (var i = 0; i < isdicelocked.length; i++) {
       if (isdicelocked[i] == false) {
@@ -30,7 +22,6 @@ function rollDices() {
     }
     console.log(diceScore);
     checkScoreButtons(activePlayer);
-    checkDropButtons(activePlayer);
     checkSpecialScoreButtons();
     rollCounter++;
     if (rollCounter == 3){
@@ -86,84 +77,44 @@ function rollDices() {
     if (field == 7)
     {
       sum = countAllEyes();
-      if (activePlayer == 1){
-        player1score[6] = sum;
-      }
-      else{
-        player2score[6] = sum;
-      }
+      playerscore[6] = sum;
     }
     if (field == 8)
     {
       sum = countAllEyes();
-      if (activePlayer == 1){
-        player1score[7] = sum;
-      }
-      else{
-        player2score[7] = sum;
-      }
+      playerscore[7] = sum;
     }
     if (field == 9)
     {
       sum = 25;
-      if (activePlayer == 1){
-        player1score[8] = sum;
-      }
-      else{
-        player2score[8] = sum;
-      }
+      playerscore[8] = sum;
     }
     if (field == 10)
     {
       sum = 30;
-      if (activePlayer == 1){
-        player1score[9] = sum;
-      }
-      else{
-        player2score[9] = sum;
-      }
+      playerscore[9] = sum;
     }
     if (field == 11)
     {
       sum = 40;
-      if (activePlayer == 1){
-        player1score[10] = sum;
-      }
-      else{
-        player2score[10] = sum;
-      }
+      playerscore[10] = sum;
     }
     if (field == 12)
     {
       sum = 50;
-      if (activePlayer == 1){
-        player1score[11] = sum;
-      }
-      else{
-        player2score[11] = sum;
-      }
+      playerscore[11] = sum;
     }
     if (field == 13)
     {
       sum = countAllEyes();
-      if (activePlayer == 1){
-        player1score[12] = sum;
-      }
-      else{
-        player2score[12] = sum;
-      }
+      playerscore[12] = sum;
     }
     console.log("field " + field);
-    console.log("score " + player1score);
-    console.log("score2 " + player2score);
+    console.log("score " + playerscore);
     console.log("activePlayer " + activePlayer);
     const [sumTop, sumBottom, bonus, totalTop, total] = calculateSums();
-    if (activePlayer == 1){
-      sendScore = player1score[field-1];
-    }
-    else{
-      sendScore = player2score[field-1];
-    }
+    sendScore = playerscore[field-1];
+
 
     const xmlhttp = new XMLHttpRequest();
     xmlhttp.open("GET", "scoreToServer.php?score="+sendScore+"&field="+(field-1)+"&player="+activePlayerName+"&sumTop="+sumTop+"&sumBottom="+sumBottom+"&bonus="+bonus+"&sum="+total+"&totalTop="+totalTop, true);
@@ -173,24 +124,16 @@ function rollDices() {
         console.log(this.responseText);
       }
     };
-    document.getElementById("score_button" + (field)).disabled = true;
-    document.getElementById("drop_button" + (field)).disabled = true;
-    if (activePlayer == 1){
-      player1locked[field-1] = 1;
-    }
-    else{
-      player2locked[field-1] = 1;
-    }
-    nextPlayer();
+
+    // reload game.php -> problem: sometimes the reload ist faster then the server response (writing to database)
+    // -> solution: reload after 50 ms
+    setTimeout(reload, 50);
+  }
+  function reload(){
+      location.reload(true);
   }
 
   function calculateSums(){
-    if (activePlayer == 1){
-      score = player1score;
-    }
-    else{
-      score = player2score;
-    }
     var sumTop = 0;
     var totalTop = 0;
     var sumBottom = 0;
@@ -198,65 +141,29 @@ function rollDices() {
     var total = 0;
 
     for (var i = 0; i < 6; i++) {
-      sumTop += score[i];
+      sumTop += playerscore[i];
     }
+
     if (sumTop >= 63){
       bonus = 35;
     }
     for (var i = 6; i < 13; i++) {
-      sumBottom += score[i];
+      sumBottom += playerscore[i];
     }
+
     total = sumTop + sumBottom + bonus;
     totalTop = sumTop + bonus;
     return [sumTop, sumBottom, bonus, totalTop, total]
   }
 
   function checkScoreButtons(player){
-    if (player == 1){
-      for (var i = 0; i < player1score.length; i++) {
-        if ((player1score[i] != 0) || (player1locked[i] != 0)){
-          document.getElementById("score_button" + (i+1)).disabled = true;
-        }
-        else{
-          document.getElementById("score_button" + (i+1)).disabled = false;
-        }
-      }
-    }
-    else{
-      for (var i = 0; i < player2score.length; i++) {
-        if ((player2score[i] != 0) || (player2locked[i] != 0)){
-          document.getElementById("score_button" + (i+1)).disabled = true;
-        }
-        else{
-          document.getElementById("score_button" + (i+1)).disabled = false;
-        }
+    for (var i = 0; i < playerscore.length; i++) {
+      if (buttonslocked[i] == 0){
+        document.getElementById("score_button" + (i+1) + "_" + activePlayer).disabled = false;
       }
     }
   }
 
-  function checkDropButtons(player){
-    if (player == 1){
-      for (var i = 0; i < player1score.length; i++) {
-        if(player1locked[i] != 0){
-          document.getElementById("drop_button" + (i+1)).disabled = true;
-        }
-        else{
-          document.getElementById("drop_button" + (i+1)).disabled = false;
-        }
-      }
-
-    } 
-    else{
-      for (var i = 0; i < player2score.length; i++) {
-        if(player2locked[i] != 0){
-          document.getElementById("drop_button" + (i+1)).disabled = true;
-        }
-        else{
-          document.getElementById("drop_button" + (i+1)).disabled = false;
-        }
-      }
-    }
-  }
 
   function checkNumberFrequency(number, freq) {
     var count = 0;
@@ -333,78 +240,43 @@ function rollDices() {
     }   
   }
 
-  function dropResult(field){
-    if (activePlayer == 1){
-      player1locked[field-1] = 1;
-    }
-    else{
-      player2locked[field-1] = 1;
-    }
-    document.getElementById("score_button" + (field)).disabled = true;
-    document.getElementById("drop_button" + (field)).disabled = true;
-
-  }
-
-  function disableButtons(){
-    for (var i = 0; i < player1locked.length; i++) {
-      document.getElementById("score_button" + (i+1)).disabled = true;
-      document.getElementById("drop_button" + (i+1)).disabled = true;
-    }
-  }
-
-  function nextPlayer(){
-    disableButtons();
-    for (var i = 0; i < isdicelocked.length; i++) {
-      if (isdicelocked[i] == true){
-        holdDice(i);
-      }
-      isdicelocked[i] = false;
-    }
-    if (activePlayer == 1){
-      activePlayer = 2;
-      activePlayerName = spieler2;
-      document.getElementById("player").innerHTML = spieler2 + " ist am Zug!";
-      console.log(spieler1);
-    }
-    else{
-      activePlayer = 1;
-      activePlayerName = spieler1;
-      document.getElementById("player").innerHTML = spieler1 + " ist am Zug!";
-      console.log(spieler2);
-    }
-    document.getElementById("roll").disabled = false;
-  }
-
   function checkSpecialScoreButtons(){
-    if (!(checkPasch(3))){
-      document.getElementById("score_button7").disabled = true;
-    }
-    if (!(checkPasch(4))){
-      document.getElementById("score_button8").disabled = true;
-    }
-    if (!(checkFullHouse())){
-      document.getElementById("score_button9").disabled = true;
-    }
-    if (!(checkStreet(3))){
-      document.getElementById("score_button10").disabled = true;
-    }
-    if (!(checkStreet(4))){
-      document.getElementById("score_button11").disabled = true;
-    }
-    if (!(checkKniffel())){
-      document.getElementById("score_button12").disabled = true;
-    }
+    if ((checkPasch(3)) && buttonslocked[6] == 0)
+      document.getElementById("score_button7_" + activePlayer ).style.borderColor = "red";
+    else
+        document.getElementById("score_button7_" + activePlayer ).style.borderColor = "transparent";
+
+    if ((checkPasch(4)) && buttonslocked[7] == 0)
+      document.getElementById("score_button8_" + activePlayer).style.borderColor = "red";
+    else
+        document.getElementById("score_button8_" + activePlayer).style.borderColor = "transparent";
+
+    if ((checkFullHouse()) && buttonslocked[8] == 0)
+      document.getElementById("score_button9_" + activePlayer).style.borderColor = "red";
+    else
+        document.getElementById("score_button9_" + activePlayer).style.borderColor = "transparent";
+
+    if ((checkStreet(3)) && buttonslocked[9] == 0)
+      document.getElementById("score_button10_" + activePlayer).style.borderColor = "red";
+    else
+        document.getElementById("score_button10_" + activePlayer).style.borderColor = "transparent";
+
+    if ((checkStreet(4)) && buttonslocked[10] == 0)
+      document.getElementById("score_button11_" + activePlayer).style.borderColor = "red";
+    else
+        document.getElementById("score_button11_" + activePlayer).style.borderColor = "transparent";
+
+    if ((checkKniffel()) && buttonslocked[11] == 0)
+      document.getElementById("score_button12_" + activePlayer).style.borderColor = "red";
+    else
+        document.getElementById("score_button12_" + activePlayer).style.borderColor = "transparent";
+
   }
 
   function oneToSix(n){
     for (var i = 0; i < diceScore.length; i++) {
       if (diceScore[i] == n){
-        if (activePlayer == 1){
-          player1score[n-1] += n;
-        }
-        else{
-          player2score[n-1] += n;
-        }
+        playerscore[n-1] += n;
       }
     }
   }
