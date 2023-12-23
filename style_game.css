@@ -23,7 +23,7 @@
 }
 
 .button {
-    background-color: gray;
+    background-color:gray;
     border: none;
     color: white;
     padding: 10px 20px;
@@ -35,8 +35,12 @@
     align-self: center;
     border-radius: 5px;
 }
+button:hover {
+    background-color: rgb(14, 122, 254, 0.8);
+    color: white;
+}
 button:disabled {
-    background-color: lightgray;
+    background-color: lightgrey;
     color: black;
 }
 
@@ -71,7 +75,7 @@ button:disabled {
     font-weight: 900;
     text-align: center;
     width: 100px;
-    background-color: gray;
+    background-color: darkgrey;
     color: white;
 }
 
