@@ -68,13 +68,5 @@
     $sql = "UPDATE `score` SET `$field` = $scoreGet, `summe_oben` = $sumTop, `bonus` = $bonus, `gesamt_oben` = $totalTop, `gesamt_unten` = $sumBottom, `gesamt` = $sumTotal WHERE `score`.`id` = $id";
     $result = mysqli_query($conn, $sql);
 
-
-
-//    $sql = "UPDATE `score` (`id`, `playername`, `$field`, `summe_oben`, `bonus`, `gesamt_oben`, `gesamt_unten`, `gesamt`) VALUES ($id, '$playerName', $scoreGet, $sumTop, $bonus, $totalTop, $sumBottom, $sumTotal)";
-//    echo $sql;
-//    $result = mysqli_query($conn, $sql);
-
     $conn->close();
-
-
 ?>

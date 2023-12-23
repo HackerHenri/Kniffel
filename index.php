@@ -4,7 +4,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="UTF-8">
     <title>Henris Würfelspiel</title> 
-    <link id="style1" rel="stylesheet" href="style.css">
+    <link id="style1" rel="stylesheet" href="style_game.css">
 </head>
 <body>
   <h1>Würfelspiel Startseite</h1>
