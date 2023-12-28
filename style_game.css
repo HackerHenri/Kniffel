@@ -1,0 +1,116 @@
+* {
+    box-sizing: border-box;
+}
+
+.container {
+    display: flex;
+    flex-flow: column;
+    flex-wrap: wrap;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+    margin: 20px;
+}
+
+.item {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 10px;
+    text-align: center;
+    padding: 10px;
+    align-self: center;
+}
+
+.button {
+    background-color:gray;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    margin: 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    align-self: center;
+    border-radius: 5px;
+}
+button:hover {
+    background-color: rgb(14, 122, 254, 0.8);
+    color: white;
+}
+button:disabled {
+    background-color: lightgrey;
+    color: black;
+}
+
+.button_table {
+    background-color: gray;
+    border: 2px solid black;
+    border-color: transparent;
+    color: white;
+    margin: 2px;
+    width: 140px;
+    height: 30px;
+    text-align: center;
+    display: inline-block;
+    overflow: auto;
+    font-size: 20px;
+    border-radius: 5px;
+}
+
+.table_cell {
+    border: 1px solid black;
+    padding: 5px;
+    font-size: 20px;
+    font-weight: 700;
+    text-align: center;
+    width: 150px;
+}
+
+.table_cell_heading {
+    border: 1px solid black;
+    padding: 5px;
+    font-size: 20px;
+    font-weight: 900;
+    text-align: center;
+    width: 100px;
+    background-color: darkgrey;
+    color: white;
+}
+
+.dice {
+    display: inline-block;
+    width: 50px;
+    height: 50px;
+    margin: 5px;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+
+#h1{
+    margin-top: 200px;
+}
+
+#dice1 {
+    background-image: url("images/dice1.png");
+}
+#dice2 {
+    background-image: url("images/dice2.png");
+}
+#dice3 {
+    background-image: url("images/dice3.png");
+}
+#dice4 {
+    background-image: url("images/dice4.png");
+}
+#dice5 {
+    background-image: url("images/dice5.png");
+}
+
+table{
+    border: 2px solid black;
+    border-collapse: collapse;
+    margin: 10px;
+}
