@@ -84,49 +84,77 @@ function rollDices() {
     }
     if (field == 7)
     {
-      if(checkPasch(3))
-        playerscore[6] = countAllEyes();
+      if (checkPasch(3))
+      {
+        sum = countAllEyes();
+      }
       else
-        playerscore[6] = 0;
+      {
+        sum = 0;
+      }
+      playerscore[6] = sum;
     }
     if (field == 8)
     {
-        if(checkPasch(4))
-            playerscore[7] = countAllEyes();
-        else
-            playerscore[7] = 0;
+      if (checkPasch(4))
+      {
+        sum = countAllEyes();
+      }
+      else
+      {
+        sum = 0;
+      }
+      playerscore[7] = sum;
     }
     if (field == 9)
     {
-      if(checkFullHouse())
-          playerscore[8] = 25;
+      if (checkFullHouse())
+      {
+        sum = 25;
+      }
       else
-          playerscore[8] = 0;
+      {
+        sum = 0;
+      }
+      playerscore[8] = sum;
     }
 
     if (field == 10)
     {
-      if(checkStreet(3))
-          playerscore[9] = 30;
-      else
-          playerscore[9] = 0;
 
+      if (checkStreet(3))
+      {
+        sum = 30;
+      }
+      else
+      {
+        sum = 0;
+      }
+      playerscore[9] = sum;
     }
     if (field == 11)
     {
-      if(checkStreet(4))
-          playerscore[10] = 40;
+      if (checkStreet(4))
+      {
+        sum = 40;
+      }
       else
-          playerscore[10] = 0;
-
+      {
+        sum = 0;
+      }
+      playerscore[10] = sum;
     }
     if (field == 12)
     {
-      if(checkKniffel())
-          playerscore[11] = 50;
+      if (checkKniffel())
+      {
+        sum = 50;
+      }
       else
-          playerscore[11] = 0;
-
+      {
+        sum = 0;
+      }
+      playerscore[11] = sum;
     }
     if (field == 13)
     {
