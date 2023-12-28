@@ -6,6 +6,16 @@ var diceScore = [0,0,0,0,0];
 var activePlayer = 1;
 var activePlayerName = "";
 
+window.onload = function() {
+  if (rollCounter !== 0) {
+    for (let i = 1; i <= 5; i++) {
+      document.getElementById('dice' + i).disabled = false;
+    }
+    checkScoreButtons(activePlayer);
+    checkSpecialScoreButtons();
+  }
+}
+
 function rollDices() {
   for (var i = 0; i < isdicelocked.length; i++) {
     document.getElementById("dice"+(i+1)).disabled = false;
@@ -74,33 +84,49 @@ function rollDices() {
     }
     if (field == 7)
     {
-      sum = countAllEyes();
-      playerscore[6] = sum;
+      if(checkPasch(3))
+        playerscore[6] = countAllEyes();
+      else
+        playerscore[6] = 0;
     }
     if (field == 8)
     {
-      sum = countAllEyes();
-      playerscore[7] = sum;
+        if(checkPasch(4))
+            playerscore[7] = countAllEyes();
+        else
+            playerscore[7] = 0;
     }
     if (field == 9)
     {
-      sum = 25;
-      playerscore[8] = sum;
+      if(checkFullHouse())
+          playerscore[8] = 25;
+      else
+          playerscore[8] = 0;
     }
+
     if (field == 10)
     {
-      sum = 30;
-      playerscore[9] = sum;
+      if(checkStreet(3))
+          playerscore[9] = 30;
+      else
+          playerscore[9] = 0;
+
     }
     if (field == 11)
     {
-      sum = 40;
-      playerscore[10] = sum;
+      if(checkStreet(4))
+          playerscore[10] = 40;
+      else
+          playerscore[10] = 0;
+
     }
     if (field == 12)
     {
-      sum = 50;
-      playerscore[11] = sum;
+      if(checkKniffel())
+          playerscore[11] = 50;
+      else
+          playerscore[11] = 0;
+
     }
     if (field == 13)
     {
@@ -185,7 +211,7 @@ function rollDices() {
     }
     return false;
   }
-  
+
   function checkFullHouse(){
     var counter = 0;
     var counter2 = 0;
