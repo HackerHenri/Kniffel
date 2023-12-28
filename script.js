@@ -35,15 +35,15 @@ function rollDices() {
     checkScoreButtons(activePlayer);
     checkSpecialScoreButtons();
     rollCounter++;
-    sendActiveRound();
-    if (rollCounter == 3){
+
+    if (rollCounter >= 3){
       document.getElementById("roll").disabled = true;
-      rollCounter = 0;
     }
+  sendActiveRound();
   }
 
   function holdDice(buttonId){
-    sendActiveRound();
+
     if (isdicelocked[buttonId] == 0){
       isdicelocked[buttonId] = 1;
       document.getElementById("dice" + (buttonId + 1)).style.backgroundImage = "url('images/dice"+ diceScore[buttonId] + "_marked.png')";
@@ -52,6 +52,7 @@ function rollDices() {
       isdicelocked[buttonId] = 0;
       document.getElementById("dice" + (buttonId + 1)).style.backgroundImage = "url('images/dice"+ diceScore[buttonId] + ".png')";
     }
+    sendActiveRound();
   }
 
   function endRound(){
@@ -167,7 +168,6 @@ function rollDices() {
     const [sumTop, sumBottom, bonus, totalTop, total] = calculateSums();
     sendScore = playerscore[field-1];
 
-
     const xmlhttp = new XMLHttpRequest();
     xmlhttp.open("GET", "scoreToServer.php?score="+sendScore+"&field="+(field-1)+"&player="+activePlayerName+"&sumTop="+sumTop+"&sumBottom="+sumBottom+"&bonus="+bonus+"&sum="+total+"&totalTop="+totalTop, true);
     xmlhttp.send();
@@ -178,8 +178,8 @@ function rollDices() {
     };
 
     // reload game.php -> problem: sometimes the reload ist faster then the server response (writing to database)
-    // -> solution: reload after 50 ms
-    setTimeout(reload, 50);
+    // -> solution: reload after 200 ms
+    setTimeout(reload, 200);
   }
   function reload(){
       location.reload(true);
@@ -231,7 +231,7 @@ function rollDices() {
   }
 
   function checkPasch(n){
-    for (var i=0; i<diceScore.length; i++){
+    for (var i=1; i<=6; i++){
       if (checkNumberFrequency(i, n)){
         console.log(n + "er "+"Pasch");
         return true;

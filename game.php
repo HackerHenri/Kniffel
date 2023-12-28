@@ -174,7 +174,12 @@
             }
 
             // ##### Update Playernames in Script #####
-            echo "<h2 class='item'>$player1 vs. $player2</h2>";
+            if($activePlayer == $player1){
+                echo "<h2 class='item'><span style='color: red'>$player1</span> &nbspvs. $player2</h2>";
+            }
+            else{
+                echo "<h2 class='item'>$player1 vs.&nbsp <span style='color: red'>$player2</span></h2>";
+            }
 
 
     // ##### Get All activeRound Values #####
@@ -211,6 +216,7 @@
             $conn->close();
 
         ?>
+
         <div class="item">
             <div class="item" style="flex-flow: column">
 
@@ -224,7 +230,14 @@
                     }
                 ?>
 
-                <button id="roll" class="standard_button" onclick="rollDices()">Würfeln</button>
+                <?php
+                    if ($rollCounter < 3) {
+                        echo "<button id='roll' class='standard_button' onclick='rollDices()'>Würfeln</button>";
+                    }
+                    else{
+                        echo "<button id='roll' class='standard_button' onclick='rollDices()' disabled>Würfeln</button>";
+                    }
+                ?>
             </div>
 
             <div class="item">
@@ -235,46 +248,46 @@
                             <td class="table_cell_heading"><?php echo $player1 ?></td>
                             <td class="table_cell_heading"><?php echo $player2 ?> </td>
                         </tr>
-                        <tr class="table_cell">
+                        <tr>
                             <td class="table_cell_heading">1er</td>
-                            <td><button id="score_button1_1" class="button_table" disabled onclick="selectResult(1)" ><?php echo $score1[0] ?></button></td>
-                            <td><button id="score_button1_2" class="button_table" disabled onclick="selectResult(1)"><?php echo $score2[0] ?></button></td>
+                            <td class="table_cell"><button id="score_button1_1" class="button_table" disabled onclick="selectResult(1)" ><?php echo $score1[0] ?></button></td>
+                            <td class="table_cell"><button id="score_button1_2" class="button_table" disabled onclick="selectResult(1)"><?php echo $score2[0] ?></button></td>
                         </tr>
-                        <tr class="table_cell">
+                        <tr>
                             <td class="table_cell_heading">2er</td>
-                            <td><button id="score_button2_1" class="button_table" disabled onclick="selectResult(2)"><?php echo $score1[1] ?></button></td>
-                            <td><button id="score_button2_2" class="button_table" disabled onclick="selectResult(2)"><?php echo $score2[1] ?></button></td>
+                            <td class="table_cell"><button id="score_button2_1" class="button_table" disabled onclick="selectResult(2)"><?php echo $score1[1] ?></button></td>
+                            <td class="table_cell"><button id="score_button2_2" class="button_table" disabled onclick="selectResult(2)"><?php echo $score2[1] ?></button></td>
                         </tr>
-                        <tr class="table_cell">
+                        <tr>
                             <td class="table_cell_heading">3er</td>
-                            <td><button id="score_button3_1" class="button_table" disabled onclick="selectResult(3)"><?php echo $score1[2] ?></button></td>
-                            <td><button id="score_button3_2" class="button_table" disabled onclick="selectResult(3)"><?php echo $score2[2] ?></button></td>
+                            <td class="table_cell"><button id="score_button3_1" class="button_table" disabled onclick="selectResult(3)"><?php echo $score1[2] ?></button></td>
+                            <td class="table_cell"><button id="score_button3_2" class="button_table" disabled onclick="selectResult(3)"><?php echo $score2[2] ?></button></td>
                         </tr>
-                        <tr class="table_cell">
+                        <tr>
                             <td class="table_cell_heading">4er</td>
-                            <td><button id="score_button4_1" class="button_table" disabled onclick="selectResult(4)"><?php echo $score1[3] ?></button></td>
-                            <td><button id="score_button4_2" class="button_table" disabled onclick="selectResult(4)"><?php echo $score2[3] ?></button></td>
+                            <td class="table_cell"><button id="score_button4_1" class="button_table" disabled onclick="selectResult(4)"><?php echo $score1[3] ?></button></td>
+                            <td class="table_cell"><button id="score_button4_2" class="button_table" disabled onclick="selectResult(4)"><?php echo $score2[3] ?></button></td>
                         </tr>
-                        <tr class="table_cell">
+                        <tr>
                             <td class="table_cell_heading">5er</td>
-                            <td><button id="score_button5_1" class="button_table" disabled onclick="selectResult(5)"><?php echo $score1[4] ?></button></td>
-                            <td><button id="score_button5_2" class="button_table" disabled onclick="selectResult(5)"><?php echo $score2[4] ?></button></td>
+                            <td class="table_cell"><button id="score_button5_1" class="button_table" disabled onclick="selectResult(5)"><?php echo $score1[4] ?></button></td>
+                            <td class="table_cell"><button id="score_button5_2" class="button_table" disabled onclick="selectResult(5)"><?php echo $score2[4] ?></button></td>
                         </tr>
-                        <tr class="table_cell">
+                        <tr>
                             <td class="table_cell_heading">6er</td>
-                            <td><button id="score_button6_1" class="button_table" disabled onclick="selectResult(6)"><?php echo $score1[5] ?></button></td>
-                            <td><button id="score_button6_2" class="button_table" disabled onclick="selectResult(6)"><?php echo $score2[5] ?></button></td>
-                        <tr class="table_cell">
+                            <td class="table_cell"><button id="score_button6_1" class="button_table" disabled onclick="selectResult(6)"><?php echo $score1[5] ?></button></td>
+                            <td class="table_cell"><button id="score_button6_2" class="button_table" disabled onclick="selectResult(6)"><?php echo $score2[5] ?></button></td>
+                        <tr>
                             <td class="table_cell_heading">Summe oben</td>
                             <td class="table_cell"><?php echo $score1[6]?></td>
                             <td class="table_cell"><?php echo $score2[6]?></td>
                         </tr>
-                        <tr class="table_cell">
+                        <tr>
                             <td class="table_cell_heading">Bonus (63+)</td>
                             <td class="table_cell"><?php echo $score1[7]?></td>
                             <td class="table_cell"><?php echo $score2[7]?></td>
                         </tr>
-                        <tr class="table_cell">
+                        <tr>
                             <td class="table_cell_heading">Gesamt oben</td>
                             <td class="table_cell"><?php echo $score1[8]?></td>
                             <td class="table_cell"><?php echo $score2[8]?></td>
@@ -289,47 +302,47 @@
                             <td class="table_cell_heading"><?php echo $player1 ?></td>
                             <td class="table_cell_heading"><?php echo $player2 ?> </td>
                         </tr>
-                        <tr class="table_cell">
+                        <tr>
                             <td class="table_cell_heading">3er Pasch</td>
-                            <td><button id="score_button7_1" class="button_table" disabled onclick="selectResult(7)"><?php echo $score1[9] ?></button></td>
-                            <td><button id="score_button7_2" class="button_table" disabled onclick="selectResult(7)"><?php echo $score2[9] ?></button></td>
+                            <td class="table_cell"><button id="score_button7_1" class="button_table" disabled onclick="selectResult(7)"><?php echo $score1[9] ?></button></td>
+                            <td class="table_cell"><button id="score_button7_2" class="button_table" disabled onclick="selectResult(7)"><?php echo $score2[9] ?></button></td>
                         </tr>
-                        <tr class="table_cell">
+                        <tr>
                             <td class="table_cell_heading">4er Pasch</td>
-                            <td><button id="score_button8_1" class="button_table" disabled onclick="selectResult(8)"><?php echo $score1[10] ?></button></td>
-                            <td><button id="score_button8_2" class="button_table" disabled onclick="selectResult(8)"><?php echo $score2[10] ?></button></td>
+                            <td class="table_cell"><button id="score_button8_1" class="button_table" disabled onclick="selectResult(8)"><?php echo $score1[10] ?></button></td>
+                            <td class="table_cell"><button id="score_button8_2" class="button_table" disabled onclick="selectResult(8)"><?php echo $score2[10] ?></button></td>
                         </tr>
-                        <tr class="table_cell">
+                        <tr>
                             <td class="table_cell_heading">Full House</td>
-                            <td><button id="score_button9_1" class="button_table" disabled onclick="selectResult(9)"><?php echo $score1[11] ?></button></td>
-                            <td><button id="score_button9_2" class="button_table" disabled onclick="selectResult(9)"><?php echo $score2[11] ?></button></td>
+                            <td class="table_cell"><button id="score_button9_1" class="button_table" disabled onclick="selectResult(9)"><?php echo $score1[11] ?></button></td>
+                            <td class="table_cell"><button id="score_button9_2" class="button_table" disabled onclick="selectResult(9)"><?php echo $score2[11] ?></button></td>
                         </tr>
-                        <tr class="table_cell">
+                        <tr>
                             <td class="table_cell_heading">Kleine Straße</td>
-                            <td><button id="score_button10_1" class="button_table" disabled onclick="selectResult(10)"><?php echo $score1[12] ?></button></td>
-                            <td><button id="score_button10_2" class="button_table" disabled onclick="selectResult(10)"><?php echo $score2[12] ?></button></td>
+                            <td class="table_cell"><button id="score_button10_1" class="button_table" disabled onclick="selectResult(10)"><?php echo $score1[12] ?></button></td>
+                            <td class="table_cell"><button id="score_button10_2" class="button_table" disabled onclick="selectResult(10)"><?php echo $score2[12] ?></button></td>
                         </tr>
-                        <tr class="table_cell">
+                        <tr>
                             <td class="table_cell_heading">Große Straße</td>
-                            <td><button id="score_button11_1" class="button_table" disabled onclick="selectResult(11)"><?php echo $score1[13] ?></button></td>
-                            <td><button id="score_button11_2" class="button_table" disabled onclick="selectResult(11)"><?php echo $score2[13] ?></button></td>
+                            <td class="table_cell"><button id="score_button11_1" class="button_table" disabled onclick="selectResult(11)"><?php echo $score1[13] ?></button></td>
+                            <td class="table_cell"><button id="score_button11_2" class="button_table" disabled onclick="selectResult(11)"><?php echo $score2[13] ?></button></td>
                         </tr>
-                        <tr class="table_cell">
+                        <tr>
                             <td class="table_cell_heading">Kniffel</td>
-                            <td><button id="score_button12_1" class="button_table" disabled onclick="selectResult(12)"><?php echo $score1[14] ?></button></td>
-                            <td><button id="score_button12_2" class="button_table" disabled onclick="selectResult(12)"><?php echo $score2[14] ?></button></td>
+                            <td class="table_cell"><button id="score_button12_1" class="button_table" disabled onclick="selectResult(12)"><?php echo $score1[14] ?></button></td>
+                            <td class="table_cell"><button id="score_button12_2" class="button_table" disabled onclick="selectResult(12)"><?php echo $score2[14] ?></button></td>
                         </tr>
-                        <tr class="table_cell">
+                        <tr>
                             <td class="table_cell_heading">Chance</td>
-                            <td><button id="score_button13_1" class="button_table" disabled onclick="selectResult(13)"><?php echo $score1[15] ?></button></td>
-                            <td><button id="score_button13_2" class="button_table" disabled onclick="selectResult(13)"><?php echo $score2[15] ?></button></td>
+                            <td class="table_cell"><button id="score_button13_1" class="button_table" disabled onclick="selectResult(13)"><?php echo $score1[15] ?></button></td>
+                            <td class="table_cell"><button id="score_button13_2" class="button_table" disabled onclick="selectResult(13)"><?php echo $score2[15] ?></button></td>
                         </tr>
-                        <tr class="table_cell">
+                        <tr>
                             <td class="table_cell_heading">Gesamt unten</td>
                             <td class="table_cell"><?php echo $score1[16]?></td>
                             <td class="table_cell"><?php echo $score2[16]?></td>
                         </tr>
-                        <tr class="table_cell">
+                        <tr>
                             <td class="table_cell_heading">Gesamt</td>
                             <td class="table_cell"><?php echo $score1[17]?></td>
                             <td class="table_cell"><?php echo $score2[17]?></td>

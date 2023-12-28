@@ -53,13 +53,6 @@
     $password = "";
     $conn = mysqli_connect($servername, $username, $password, "kniffel");
 
-    // get last entry for incremente id
-//    $sql = "SELECT * FROM `score` ORDER BY `score`.`id` DESC LIMIT 1";
-//    $result = mysqli_query($conn, $sql);
-//    $row = mysqli_fetch_assoc($result);
-//    $id = $row['id'];
-//    $id++;
-
     // duplicate second last entry for active player
     $sql = "INSERT INTO `score` (`playername`, `1er`, `2er`, `3er`, `4er`, `5er`, `6er`, `summe_oben`, `bonus`, `gesamt_oben`, `3er_pasch`, `4er_pasch`, `full_house`, `kleine_strasse`, `grosse_strasse`, `kniffel`, `chance`, `gesamt_unten`, `gesamt`) SELECT `playername`, `1er`, `2er`, `3er`, `4er`, `5er`, `6er`, `summe_oben`, `bonus`, `gesamt_oben`, `3er_pasch`, `4er_pasch`, `full_house`, `kleine_strasse`, `grosse_strasse`, `kniffel`, `chance`, `gesamt_unten`, `gesamt` FROM `score` ORDER BY `score`.`id` DESC LIMIT 1, 1";
     $result = mysqli_query($conn, $sql);
@@ -75,7 +68,6 @@
     // Insert standard values into activeround table
     $sql = "INSERT INTO `activeround`(`dicelocked1`, `dicelocked2`, `dicelocked3`, `dicelocked4`, `dicelocked5`, `rollCounter`, `diceScore1`, `diceScore2`, `diceScore3`, `diceScore4`, `diceScore5`) VALUES ('0','0','0','0','0','0','1','2','3','4','5');";
     mysqli_query($conn, $sql);
-
 
     $conn->close();
 ?>

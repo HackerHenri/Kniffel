@@ -42,7 +42,7 @@
 }
 
 .button_table:disabled {
-    background-color: lightgrey;
+    background-color: lightgray;
     color: black;
 }
 
