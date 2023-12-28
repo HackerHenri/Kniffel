@@ -68,5 +68,13 @@
     $sql = "UPDATE `score` SET `$field` = $scoreGet, `summe_oben` = $sumTop, `bonus` = $bonus, `gesamt_oben` = $totalTop, `gesamt_unten` = $sumBottom, `gesamt` = $sumTotal WHERE `score`.`id` = $id";
     $result = mysqli_query($conn, $sql);
 
+    // delete all entries from table
+    $sql = 'TRUNCATE TABLE activeround';
+    mysqli_query($conn, $sql);
+
+    // Insert standard values into activeround table
+    $sql = "INSERT INTO `activeround`(`dicelocked1`, `dicelocked2`, `dicelocked3`, `dicelocked4`, `dicelocked5`, `rollCounter`, `diceScore1`, `diceScore2`, `diceScore3`, `diceScore4`, `diceScore5`) VALUES ('0','0','0','0','0','0','1','2','3','4','5');";
+    mysqli_query($conn, $sql);
+
     $conn->close();
 ?>

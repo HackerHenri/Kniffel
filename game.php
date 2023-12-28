@@ -184,11 +184,11 @@
 
             // Get dicelocked values
             $dicelocked = array(
-                0 => (bool)$row['dicelocked1'],
-                1 => (bool)$row['dicelocked2'],
-                2 => (bool)$row['dicelocked3'],
-                3 => (bool)$row['dicelocked4'],
-                4 => (bool)$row['dicelocked5'],
+                0 => (int)$row['dicelocked1'],
+                1 => (int)$row['dicelocked2'],
+                2 => (int)$row['dicelocked3'],
+                3 => (int)$row['dicelocked4'],
+                4 => (int)$row['dicelocked5'],
             );
             $js_array = json_encode($dicelocked);
             echo"<script>var isdicelocked = $js_array;</script>";
