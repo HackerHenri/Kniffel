@@ -213,27 +213,18 @@
         ?>
         <div class="item">
             <div class="item" style="flex-flow: column">
-                <div id="dice1_box">
-                    <button class="dice" id="dice1" onclick="holdDice(0)" disabled></button>
-                </div>
 
-                <div>
-                    <button class="dice" id="dice2" onclick="holdDice(1)" disabled></button>
-                </div>
+                <?php
 
-                <div>
-                    <button class="dice" id="dice3" onclick="holdDice(2)" disabled></button>
-                </div>
+                    for ($i = 1; $i <= 5; $i++) {
+                        $diceImage = $dicelocked[$i-1] ? "images/dice{$diceScore[$i-1]}_marked.png" : "images/dice{$diceScore[$i-1]}.png";
+                        echo "<div>";
+                        echo "<button class='dice' id='dice$i' onclick='holdDice(" . ($i - 1) . ")' style='background-image: url($diceImage);' disabled></button>";
+                        echo "</div>";
+                    }
+                ?>
 
-                <div>
-                    <button class="dice" id="dice4" onclick="holdDice(3)" disabled></button>
-                </div>
-
-                <div>
-                    <button class="dice" id="dice5" onclick="holdDice(4)" disabled></button>
-                </div>
-
-                <button id="roll" class="button" onclick="rollDices()">Würfeln</button>
+                <button id="roll" class="standard_button" onclick="rollDices()">Würfeln</button>
             </div>
 
             <div class="item">
@@ -349,7 +340,7 @@
         </div>
 
         <div class="item">
-            <button class="button" onclick="endRound()" style="width: 500px">Runde beenden!</button>
+            <button class="standard_button" onclick="endRound()" style="width: 500px">Runde beenden!</button>
         </div>
 
     </div>
