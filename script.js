@@ -6,6 +6,16 @@ var diceScore = [0,0,0,0,0];
 var activePlayer = 1;
 var activePlayerName = "";
 
+window.onload = function() {
+  if (rollCounter !== 0) {
+    for (let i = 1; i <= 5; i++) {
+      document.getElementById('dice' + i).disabled = false;
+    }
+    checkScoreButtons(activePlayer);
+    checkSpecialScoreButtons();
+  }
+}
+
 function rollDices() {
   for (var i = 0; i < isdicelocked.length; i++) {
     document.getElementById("dice"+(i+1)).disabled = false;
@@ -108,8 +118,10 @@ function rollDices() {
       }
       playerscore[8] = sum;
     }
+
     if (field == 10)
     {
+
       if (checkStreet(3))
       {
         sum = 30;
@@ -227,7 +239,7 @@ function rollDices() {
     }
     return false;
   }
-  
+
   function checkFullHouse(){
     var counter = 0;
     var counter2 = 0;
