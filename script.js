@@ -1,4 +1,4 @@
-var isdicelocked = [false, false, false, false, false];
+var isdicelocked = [0, 0, 0, 0, 0];
 var playerscore = [0,0,0,0,0,0,0,0,0,0,0,0,0];
 var buttonslocked = [0,0,0,0,0,0,0,0,0,0,0,0,0];
 var rollCounter = 0;
@@ -22,7 +22,7 @@ function rollDices() {
   }
 
     for (var i = 0; i < isdicelocked.length; i++) {
-      if (isdicelocked[i] == false) {
+      if (isdicelocked[i] == 0) {
         var rnd = Math.floor(Math.random() * 6) + 1;
         diceScore[i] = rnd;
         var rnd_str = "url('images/dice" + rnd.toString() + ".png')";
@@ -31,27 +31,25 @@ function rollDices() {
       }
     }
     console.log(diceScore);
+    console.log(isdicelocked);
     checkScoreButtons(activePlayer);
     checkSpecialScoreButtons();
     rollCounter++;
+    sendActiveRound();
     if (rollCounter == 3){
       document.getElementById("roll").disabled = true;
       rollCounter = 0;
     }
-
   }
 
   function holdDice(buttonId){
-    if (isdicelocked[buttonId] == false){
-      isdicelocked[buttonId] = true;
+    sendActiveRound();
+    if (isdicelocked[buttonId] == 0){
+      isdicelocked[buttonId] = 1;
       document.getElementById("dice" + (buttonId + 1)).style.backgroundImage = "url('images/dice"+ diceScore[buttonId] + "_marked.png')";
-      console.log("Dice " + (buttonId + 1) + " locked");
-      console.log(buttonId);
-      console.log(diceScore);
-      console.log("images/dice"+ diceScore[buttonId] + "_marked.png");
     }
     else{
-      isdicelocked[buttonId] = false;
+      isdicelocked[buttonId] = 0;
       document.getElementById("dice" + (buttonId + 1)).style.backgroundImage = "url('images/dice"+ diceScore[buttonId] + ".png')";
     }
   }
@@ -313,4 +311,15 @@ function rollDices() {
       sum += diceScore[i];
     }
     return sum;
+  }
+
+  function sendActiveRound(){
+    const xmlhttp = new XMLHttpRequest();
+    xmlhttp.open("GET", "activeroundToServer.php?dicelocked1="+isdicelocked[0]+"&dicelocked2="+isdicelocked[1]+"&dicelocked3="+isdicelocked[2]+"&dicelocked4="+isdicelocked[3]+"&dicelocked5="+isdicelocked[4]+"&rollCounter="+rollCounter+"&diceScore1="+diceScore[0]+"&diceScore2="+diceScore[1]+"&diceScore3="+diceScore[2]+"&diceScore4="+diceScore[3]+"&diceScore5="+diceScore[4], true);
+    xmlhttp.send();
+    xmlhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+        console.log(this.responseText);
+      }
+    };
   }
