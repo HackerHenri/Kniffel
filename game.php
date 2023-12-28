@@ -17,7 +17,7 @@
             $username = "root";
             $password = "";
 
-    // ##### Create connection #####
+            // ##### Create connection #####
              $conn = mysqli_connect($servername, $username, $password, "kniffel");
 
             $sql = "SELECT * FROM `score` WHERE 1";
@@ -34,8 +34,7 @@
             $row = mysqli_fetch_assoc($result);
             $activePlayer = $row['playername'];
 
-
-    // ##### Get Score from Player1 #####
+            // ##### Get Score from Player1 #####
             $sql = "SELECT * FROM `score` WHERE `playername` = '$player1' ORDER BY `score`.`id` DESC LIMIT 1";
             $result = mysqli_query($conn, $sql);
             $row = mysqli_fetch_assoc($result);
@@ -66,7 +65,7 @@
                 }
             }
 
-    // ##### Get Score from Player2 #####
+            // ##### Get Score from Player2 #####
             $sql = "SELECT * FROM `score` WHERE `playername` = '$player2' ORDER BY `score`.`id` DESC LIMIT 1";
             $result = mysqli_query($conn, $sql);
             $row = mysqli_fetch_assoc($result);
@@ -97,7 +96,7 @@
                 }
             }
 
-    // ##### Get Score for script variable from activePlayer #####
+            // ##### Get Score for script variable from activePlayer #####
             $sql = "SELECT * FROM `score` WHERE `playername` = '$activePlayer' ORDER BY `score`.`id` DESC LIMIT 1";
             $result = mysqli_query($conn, $sql);
             $row = mysqli_fetch_assoc($result);
@@ -118,19 +117,29 @@
                 12 => $row['chance'],
             );
 
+            $endGame = true;
+
             for ($i = 0; $i < 13; $i++) {
                 if ($scoreScript[$i] == NULL) {
                     $scoreScript[$i] = 0;
+                    $endGame = false;
                 }
                 else{
                     $scoreScript[$i] = (int)$scoreScript[$i];
                 }
             }
+
+            if ($endGame){
+                header("Location: round_over.php");
+                exit;
+            }
+
+
             // copy array to javascript and transfer to integer
             $js_array = json_encode($scoreScript);
-            echo"<script>var playerscore = $js_array;</script>";
+            echo"<script>var playerscore_active = $js_array;</script>";
 
-    // ##### Get ButtonsLocked for script variable from activePlayer #####
+            // ##### Get ButtonsLocked for script variable from activePlayer #####
             $buttonslockedScript = array(
                 0 => $row['1er'],
                 1 => $row['2er'],
@@ -161,7 +170,7 @@
             echo"<script>var buttonslocked = $js_array;</script>";
 
 
-    // ##### Update Playernames in Script #####
+            // ##### Update Playernames in Script #####
             echo"<script>var spieler1 = '$player1';</script>";
             echo"<script>var spieler2 = '$player2';</script>";
             echo"<script>var activePlayerName = '$activePlayer';</script>";
@@ -182,7 +191,7 @@
             }
 
 
-    // ##### Get All activeRound Values #####
+            // ##### Get All activeRound Values #####
             $sql = "SELECT * FROM `activeround` WHERE 1";
             $result = mysqli_query($conn, $sql);
             $row = mysqli_fetch_assoc($result);
@@ -353,7 +362,7 @@
         </div>
 
         <div class="item">
-            <button class="standard_button" onclick="endRound()" style="width: 500px">Runde beenden!</button>
+            <button class="standard_button" onclick="exitGame()" style="width: 300px">Spiel abbrechen</button>
         </div>
 
     </div>

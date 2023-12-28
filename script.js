@@ -1,7 +1,8 @@
 var isdicelocked = [0, 0, 0, 0, 0];
-var playerscore = [0,0,0,0,0,0,0,0,0,0,0,0,0];
+var playerscore_active = [0,0,0,0,0,0,0,0,0,0,0,0,0];
 var buttonslocked = [0,0,0,0,0,0,0,0,0,0,0,0,0];
 var rollCounter = 0;
+var roundcounter = 0;
 var diceScore = [0,0,0,0,0];
 var activePlayer = 1;
 var activePlayerName = "";
@@ -55,9 +56,6 @@ function rollDices() {
     sendActiveRound();
   }
 
-  function endRound(){
-    //TODO
-  }
   function selectResult(field){
     if (field == 1)
     {
@@ -93,7 +91,7 @@ function rollDices() {
       {
         sum = 0;
       }
-      playerscore[6] = sum;
+      playerscore_active[6] = sum;
     }
     if (field == 8)
     {
@@ -105,7 +103,7 @@ function rollDices() {
       {
         sum = 0;
       }
-      playerscore[7] = sum;
+      playerscore_active[7] = sum;
     }
     if (field == 9)
     {
@@ -117,7 +115,7 @@ function rollDices() {
       {
         sum = 0;
       }
-      playerscore[8] = sum;
+      playerscore_active[8] = sum;
     }
 
     if (field == 10)
@@ -131,7 +129,7 @@ function rollDices() {
       {
         sum = 0;
       }
-      playerscore[9] = sum;
+      playerscore_active[9] = sum;
     }
     if (field == 11)
     {
@@ -143,7 +141,7 @@ function rollDices() {
       {
         sum = 0;
       }
-      playerscore[10] = sum;
+      playerscore_active[10] = sum;
     }
     if (field == 12)
     {
@@ -155,18 +153,18 @@ function rollDices() {
       {
         sum = 0;
       }
-      playerscore[11] = sum;
+      playerscore_active[11] = sum;
     }
     if (field == 13)
     {
       sum = countAllEyes();
-      playerscore[12] = sum;
+      playerscore_active[12] = sum;
     }
     console.log("field " + field);
-    console.log("score " + playerscore);
+    console.log("score " + playerscore_active);
     console.log("activePlayer " + activePlayer);
     const [sumTop, sumBottom, bonus, totalTop, total] = calculateSums();
-    sendScore = playerscore[field-1];
+    sendScore = playerscore_active[field-1];
 
     const xmlhttp = new XMLHttpRequest();
     xmlhttp.open("GET", "scoreToServer.php?score="+sendScore+"&field="+(field-1)+"&player="+activePlayerName+"&sumTop="+sumTop+"&sumBottom="+sumBottom+"&bonus="+bonus+"&sum="+total+"&totalTop="+totalTop, true);
@@ -176,11 +174,12 @@ function rollDices() {
         console.log(this.responseText);
       }
     };
-
-    // reload game.php -> problem: sometimes the reload ist faster then the server response (writing to database)
+      
+    //      reload game.php -> problem: sometimes the reload ist faster then the server response (writing to database)
     // -> solution: reload after 200 ms
     setTimeout(reload, 200);
   }
+
   function reload(){
       location.reload(true);
   }
@@ -193,14 +192,14 @@ function rollDices() {
     var total = 0;
 
     for (var i = 0; i < 6; i++) {
-      sumTop += playerscore[i];
+      sumTop += playerscore_active[i];
     }
 
     if (sumTop >= 63){
       bonus = 35;
     }
     for (var i = 6; i < 13; i++) {
-      sumBottom += playerscore[i];
+      sumBottom += playerscore_active[i];
     }
 
     total = sumTop + sumBottom + bonus;
@@ -209,13 +208,12 @@ function rollDices() {
   }
 
   function checkScoreButtons(player){
-    for (var i = 0; i < playerscore.length; i++) {
+    for (var i = 0; i < playerscore_active.length; i++) {
       if (buttonslocked[i] == 0){
         document.getElementById("score_button" + (i+1) + "_" + activePlayer).disabled = false;
       }
     }
   }
-
 
   function checkNumberFrequency(number, freq) {
     var count = 0;
@@ -328,7 +326,7 @@ function rollDices() {
   function oneToSix(n){
     for (var i = 0; i < diceScore.length; i++) {
       if (diceScore[i] == n){
-        playerscore[n-1] += n;
+        playerscore_active[n-1] += n;
       }
     }
   }
@@ -350,4 +348,8 @@ function rollDices() {
         console.log(this.responseText);
       }
     };
+  }
+
+  function exitGame(){
+    window.location.href = "index.php";
   }
