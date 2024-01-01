@@ -22,7 +22,7 @@
     align-self: center;
 }
 
-.button {
+.standard_button {
     background-color:gray;
     border: none;
     color: white;
@@ -35,11 +35,23 @@
     align-self: center;
     border-radius: 5px;
 }
-button:hover {
+
+.button_table:hover {
     background-color: rgb(14, 122, 254, 0.8);
     color: white;
 }
-button:disabled {
+
+.button_table:disabled {
+    background-color: lightgray;
+    color: black;
+}
+
+.standard_button:hover {
+    background-color: rgb(14, 122, 254, 0.8);
+    color: white;
+}
+
+.standard_button:disabled {
     background-color: lightgrey;
     color: black;
 }
@@ -86,6 +98,8 @@ button:disabled {
     margin: 5px;
     background-repeat: no-repeat;
     background-size: contain;
+    border: none;
+    background-color: transparent;
 }
 
 
@@ -93,21 +107,21 @@ button:disabled {
     margin-top: 200px;
 }
 
-#dice1 {
-    background-image: url("images/dice1.png");
-}
-#dice2 {
-    background-image: url("images/dice2.png");
-}
-#dice3 {
-    background-image: url("images/dice3.png");
-}
-#dice4 {
-    background-image: url("images/dice4.png");
-}
-#dice5 {
-    background-image: url("images/dice5.png");
-}
+/*#dice1 {*/
+/*    background-image: url("images/dice1.png");*/
+/*}*/
+/*#dice2 {*/
+/*    background-image: url("images/dice2.png");*/
+/*}*/
+/*#dice3 {*/
+/*    background-image: url("images/dice3.png");*/
+/*}*/
+/*#dice4 {*/
+/*    background-image: url("images/dice4.png");*/
+/*}*/
+/*#dice5 {*/
+/*    background-image: url("images/dice5.png");*/
+/*}*/
 
 table{
     border: 2px solid black;

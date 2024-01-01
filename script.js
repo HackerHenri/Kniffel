@@ -1,10 +1,21 @@
-var isdicelocked = [false, false, false, false, false];
-var playerscore = [0,0,0,0,0,0,0,0,0,0,0,0,0];
+var isdicelocked = [0, 0, 0, 0, 0];
+var playerscore_active = [0,0,0,0,0,0,0,0,0,0,0,0,0];
 var buttonslocked = [0,0,0,0,0,0,0,0,0,0,0,0,0];
 var rollCounter = 0;
+var roundcounter = 0;
 var diceScore = [0,0,0,0,0];
 var activePlayer = 1;
 var activePlayerName = "";
+
+window.onload = function() {
+  if (rollCounter !== 0) {
+    for (let i = 1; i <= 5; i++) {
+      document.getElementById('dice' + i).disabled = false;
+    }
+    checkScoreButtons(activePlayer);
+    checkSpecialScoreButtons();
+  }
+}
 
 function rollDices() {
   for (var i = 0; i < isdicelocked.length; i++) {
@@ -12,7 +23,7 @@ function rollDices() {
   }
 
     for (var i = 0; i < isdicelocked.length; i++) {
-      if (isdicelocked[i] == false) {
+      if (isdicelocked[i] == 0) {
         var rnd = Math.floor(Math.random() * 6) + 1;
         diceScore[i] = rnd;
         var rnd_str = "url('images/dice" + rnd.toString() + ".png')";
@@ -21,34 +32,30 @@ function rollDices() {
       }
     }
     console.log(diceScore);
+    console.log(isdicelocked);
     checkScoreButtons(activePlayer);
     checkSpecialScoreButtons();
     rollCounter++;
-    if (rollCounter == 3){
-      document.getElementById("roll").disabled = true;
-      rollCounter = 0;
-    }
 
+    if (rollCounter >= 3){
+      document.getElementById("roll").disabled = true;
+    }
+  sendActiveRound();
   }
 
   function holdDice(buttonId){
-    if (isdicelocked[buttonId] == false){
-      isdicelocked[buttonId] = true;
+
+    if (isdicelocked[buttonId] == 0){
+      isdicelocked[buttonId] = 1;
       document.getElementById("dice" + (buttonId + 1)).style.backgroundImage = "url('images/dice"+ diceScore[buttonId] + "_marked.png')";
-      console.log("Dice " + (buttonId + 1) + " locked");
-      console.log(buttonId);
-      console.log(diceScore);
-      console.log("images/dice"+ diceScore[buttonId] + "_marked.png");
     }
     else{
-      isdicelocked[buttonId] = false;
+      isdicelocked[buttonId] = 0;
       document.getElementById("dice" + (buttonId + 1)).style.backgroundImage = "url('images/dice"+ diceScore[buttonId] + ".png')";
     }
+    sendActiveRound();
   }
 
-  function endRound(){
-    //TODO
-  }
   function selectResult(field){
     if (field == 1)
     {
@@ -76,45 +83,88 @@ function rollDices() {
     }
     if (field == 7)
     {
-      sum = countAllEyes();
-      playerscore[6] = sum;
+      if (checkPasch(3))
+      {
+        sum = countAllEyes();
+      }
+      else
+      {
+        sum = 0;
+      }
+      playerscore_active[6] = sum;
     }
     if (field == 8)
     {
-      sum = countAllEyes();
-      playerscore[7] = sum;
+      if (checkPasch(4))
+      {
+        sum = countAllEyes();
+      }
+      else
+      {
+        sum = 0;
+      }
+      playerscore_active[7] = sum;
     }
     if (field == 9)
     {
-      sum = 25;
-      playerscore[8] = sum;
+      if (checkFullHouse())
+      {
+        sum = 25;
+      }
+      else
+      {
+        sum = 0;
+      }
+      playerscore_active[8] = sum;
     }
+
     if (field == 10)
     {
-      sum = 30;
-      playerscore[9] = sum;
+
+      if (checkStreet(3))
+      {
+        sum = 30;
+      }
+      else
+      {
+        sum = 0;
+      }
+      playerscore_active[9] = sum;
     }
     if (field == 11)
     {
-      sum = 40;
-      playerscore[10] = sum;
+      if (checkStreet(4))
+      {
+        sum = 40;
+      }
+      else
+      {
+        sum = 0;
+      }
+      playerscore_active[10] = sum;
     }
     if (field == 12)
     {
-      sum = 50;
-      playerscore[11] = sum;
+      if (checkKniffel())
+      {
+        sum = 50;
+      }
+      else
+      {
+        sum = 0;
+      }
+      playerscore_active[11] = sum;
     }
     if (field == 13)
     {
       sum = countAllEyes();
-      playerscore[12] = sum;
+      playerscore_active[12] = sum;
     }
     console.log("field " + field);
-    console.log("score " + playerscore);
+    console.log("score " + playerscore_active);
     console.log("activePlayer " + activePlayer);
     const [sumTop, sumBottom, bonus, totalTop, total] = calculateSums();
-    sendScore = playerscore[field-1];
-
+    sendScore = playerscore_active[field-1];
 
     const xmlhttp = new XMLHttpRequest();
     xmlhttp.open("GET", "scoreToServer.php?score="+sendScore+"&field="+(field-1)+"&player="+activePlayerName+"&sumTop="+sumTop+"&sumBottom="+sumBottom+"&bonus="+bonus+"&sum="+total+"&totalTop="+totalTop, true);
@@ -124,11 +174,12 @@ function rollDices() {
         console.log(this.responseText);
       }
     };
-
-    // reload game.php -> problem: sometimes the reload ist faster then the server response (writing to database)
-    // -> solution: reload after 50 ms
-    setTimeout(reload, 50);
+      
+    //      reload game.php -> problem: sometimes the reload ist faster then the server response (writing to database)
+    // -> solution: reload after 200 ms
+    setTimeout(reload, 200);
   }
+
   function reload(){
       location.reload(true);
   }
@@ -141,14 +192,14 @@ function rollDices() {
     var total = 0;
 
     for (var i = 0; i < 6; i++) {
-      sumTop += playerscore[i];
+      sumTop += playerscore_active[i];
     }
 
     if (sumTop >= 63){
       bonus = 35;
     }
     for (var i = 6; i < 13; i++) {
-      sumBottom += playerscore[i];
+      sumBottom += playerscore_active[i];
     }
 
     total = sumTop + sumBottom + bonus;
@@ -157,13 +208,12 @@ function rollDices() {
   }
 
   function checkScoreButtons(player){
-    for (var i = 0; i < playerscore.length; i++) {
+    for (var i = 0; i < playerscore_active.length; i++) {
       if (buttonslocked[i] == 0){
         document.getElementById("score_button" + (i+1) + "_" + activePlayer).disabled = false;
       }
     }
   }
-
 
   function checkNumberFrequency(number, freq) {
     var count = 0;
@@ -179,7 +229,7 @@ function rollDices() {
   }
 
   function checkPasch(n){
-    for (var i=0; i<diceScore.length; i++){
+    for (var i=1; i<=6; i++){
       if (checkNumberFrequency(i, n)){
         console.log(n + "er "+"Pasch");
         return true;
@@ -187,7 +237,7 @@ function rollDices() {
     }
     return false;
   }
-  
+
   function checkFullHouse(){
     var counter = 0;
     var counter2 = 0;
@@ -276,7 +326,7 @@ function rollDices() {
   function oneToSix(n){
     for (var i = 0; i < diceScore.length; i++) {
       if (diceScore[i] == n){
-        playerscore[n-1] += n;
+        playerscore_active[n-1] += n;
       }
     }
   }
@@ -287,4 +337,19 @@ function rollDices() {
       sum += diceScore[i];
     }
     return sum;
+  }
+
+  function sendActiveRound(){
+    const xmlhttp = new XMLHttpRequest();
+    xmlhttp.open("GET", "activeroundToServer.php?dicelocked1="+isdicelocked[0]+"&dicelocked2="+isdicelocked[1]+"&dicelocked3="+isdicelocked[2]+"&dicelocked4="+isdicelocked[3]+"&dicelocked5="+isdicelocked[4]+"&rollCounter="+rollCounter+"&diceScore1="+diceScore[0]+"&diceScore2="+diceScore[1]+"&diceScore3="+diceScore[2]+"&diceScore4="+diceScore[3]+"&diceScore5="+diceScore[4], true);
+    xmlhttp.send();
+    xmlhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+        console.log(this.responseText);
+      }
+    };
+  }
+
+  function exitGame(){
+    window.location.href = "index.php";
   }

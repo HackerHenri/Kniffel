@@ -17,7 +17,7 @@
             $username = "root";
             $password = "";
 
-    // ##### Create connection #####
+            // ##### Create connection #####
              $conn = mysqli_connect($servername, $username, $password, "kniffel");
 
             $sql = "SELECT * FROM `score` WHERE 1";
@@ -34,8 +34,7 @@
             $row = mysqli_fetch_assoc($result);
             $activePlayer = $row['playername'];
 
-
-    // ##### Get Score from Player1 #####
+            // ##### Get Score from Player1 #####
             $sql = "SELECT * FROM `score` WHERE `playername` = '$player1' ORDER BY `score`.`id` DESC LIMIT 1";
             $result = mysqli_query($conn, $sql);
             $row = mysqli_fetch_assoc($result);
@@ -66,7 +65,7 @@
                 }
             }
 
-    // ##### Get Score from Player2 #####
+            // ##### Get Score from Player2 #####
             $sql = "SELECT * FROM `score` WHERE `playername` = '$player2' ORDER BY `score`.`id` DESC LIMIT 1";
             $result = mysqli_query($conn, $sql);
             $row = mysqli_fetch_assoc($result);
@@ -97,7 +96,7 @@
                 }
             }
 
-    // ##### Get Score for script variable from activePlayer #####
+            // ##### Get Score for script variable from activePlayer #####
             $sql = "SELECT * FROM `score` WHERE `playername` = '$activePlayer' ORDER BY `score`.`id` DESC LIMIT 1";
             $result = mysqli_query($conn, $sql);
             $row = mysqli_fetch_assoc($result);
@@ -118,19 +117,29 @@
                 12 => $row['chance'],
             );
 
+            $endGame = true;
+
             for ($i = 0; $i < 13; $i++) {
                 if ($scoreScript[$i] == NULL) {
                     $scoreScript[$i] = 0;
+                    $endGame = false;
                 }
                 else{
                     $scoreScript[$i] = (int)$scoreScript[$i];
                 }
             }
+
+            if ($endGame){
+                header("Location: round_over.php");
+                exit;
+            }
+
+
             // copy array to javascript and transfer to integer
             $js_array = json_encode($scoreScript);
-            echo"<script>var playerscore = $js_array;</script>";
+            echo"<script>var playerscore_active = $js_array;</script>";
 
-    // ##### Get ButtonsLocked for script variable from activePlayer #####
+            // ##### Get ButtonsLocked for script variable from activePlayer #####
             $buttonslockedScript = array(
                 0 => $row['1er'],
                 1 => $row['2er'],
@@ -161,7 +170,7 @@
             echo"<script>var buttonslocked = $js_array;</script>";
 
 
-    // ##### Update Playernames in Script #####
+            // ##### Update Playernames in Script #####
             echo"<script>var spieler1 = '$player1';</script>";
             echo"<script>var spieler2 = '$player2';</script>";
             echo"<script>var activePlayerName = '$activePlayer';</script>";
@@ -174,21 +183,26 @@
             }
 
             // ##### Update Playernames in Script #####
-            echo "<h2 class='item'>$player1 vs. $player2</h2>";
+            if($activePlayer == $player1){
+                echo "<h2 class='item'><span style='color: red'>$player1</span> &nbspvs. $player2</h2>";
+            }
+            else{
+                echo "<h2 class='item'>$player1 vs.&nbsp <span style='color: red'>$player2</span></h2>";
+            }
 
 
-    // ##### Get All activeRound Values #####
+            // ##### Get All activeRound Values #####
             $sql = "SELECT * FROM `activeround` WHERE 1";
             $result = mysqli_query($conn, $sql);
             $row = mysqli_fetch_assoc($result);
 
             // Get dicelocked values
             $dicelocked = array(
-                0 => (bool)$row['dicelocked1'],
-                1 => (bool)$row['dicelocked2'],
-                2 => (bool)$row['dicelocked3'],
-                3 => (bool)$row['dicelocked4'],
-                4 => (bool)$row['dicelocked5'],
+                0 => (int)$row['dicelocked1'],
+                1 => (int)$row['dicelocked2'],
+                2 => (int)$row['dicelocked3'],
+                3 => (int)$row['dicelocked4'],
+                4 => (int)$row['dicelocked5'],
             );
             $js_array = json_encode($dicelocked);
             echo"<script>var isdicelocked = $js_array;</script>";
@@ -211,29 +225,28 @@
             $conn->close();
 
         ?>
+
         <div class="item">
             <div class="item" style="flex-flow: column">
-                <div id="dice1_box">
-                    <button class="dice" id="dice1" onclick="holdDice(0)" disabled></button>
-                </div>
 
-                <div>
-                    <button class="dice" id="dice2" onclick="holdDice(1)" disabled></button>
-                </div>
+                <?php
 
-                <div>
-                    <button class="dice" id="dice3" onclick="holdDice(2)" disabled></button>
-                </div>
+                    for ($i = 1; $i <= 5; $i++) {
+                        $diceImage = $dicelocked[$i-1] ? "images/dice{$diceScore[$i-1]}_marked.png" : "images/dice{$diceScore[$i-1]}.png";
+                        echo "<div>";
+                        echo "<button class='dice' id='dice$i' onclick='holdDice(" . ($i - 1) . ")' style='background-image: url($diceImage);' disabled></button>";
+                        echo "</div>";
+                    }
+                ?>
 
-                <div>
-                    <button class="dice" id="dice4" onclick="holdDice(3)" disabled></button>
-                </div>
-
-                <div>
-                    <button class="dice" id="dice5" onclick="holdDice(4)" disabled></button>
-                </div>
-
-                <button id="roll" class="button" onclick="rollDices()">Würfeln</button>
+                <?php
+                    if ($rollCounter < 3) {
+                        echo "<button id='roll' class='standard_button' onclick='rollDices()'>Würfeln</button>";
+                    }
+                    else{
+                        echo "<button id='roll' class='standard_button' onclick='rollDices()' disabled>Würfeln</button>";
+                    }
+                ?>
             </div>
 
             <div class="item">
@@ -244,46 +257,46 @@
                             <td class="table_cell_heading"><?php echo $player1 ?></td>
                             <td class="table_cell_heading"><?php echo $player2 ?> </td>
                         </tr>
-                        <tr class="table_cell">
+                        <tr>
                             <td class="table_cell_heading">1er</td>
-                            <td><button id="score_button1_1" class="button_table" disabled onclick="selectResult(1)" ><?php echo $score1[0] ?></button></td>
-                            <td><button id="score_button1_2" class="button_table" disabled onclick="selectResult(1)"><?php echo $score2[0] ?></button></td>
+                            <td class="table_cell"><button id="score_button1_1" class="button_table" disabled onclick="selectResult(1)" ><?php echo $score1[0] ?></button></td>
+                            <td class="table_cell"><button id="score_button1_2" class="button_table" disabled onclick="selectResult(1)"><?php echo $score2[0] ?></button></td>
                         </tr>
-                        <tr class="table_cell">
+                        <tr>
                             <td class="table_cell_heading">2er</td>
-                            <td><button id="score_button2_1" class="button_table" disabled onclick="selectResult(2)"><?php echo $score1[1] ?></button></td>
-                            <td><button id="score_button2_2" class="button_table" disabled onclick="selectResult(2)"><?php echo $score2[1] ?></button></td>
+                            <td class="table_cell"><button id="score_button2_1" class="button_table" disabled onclick="selectResult(2)"><?php echo $score1[1] ?></button></td>
+                            <td class="table_cell"><button id="score_button2_2" class="button_table" disabled onclick="selectResult(2)"><?php echo $score2[1] ?></button></td>
                         </tr>
-                        <tr class="table_cell">
+                        <tr>
                             <td class="table_cell_heading">3er</td>
-                            <td><button id="score_button3_1" class="button_table" disabled onclick="selectResult(3)"><?php echo $score1[2] ?></button></td>
-                            <td><button id="score_button3_2" class="button_table" disabled onclick="selectResult(3)"><?php echo $score2[2] ?></button></td>
+                            <td class="table_cell"><button id="score_button3_1" class="button_table" disabled onclick="selectResult(3)"><?php echo $score1[2] ?></button></td>
+                            <td class="table_cell"><button id="score_button3_2" class="button_table" disabled onclick="selectResult(3)"><?php echo $score2[2] ?></button></td>
                         </tr>
-                        <tr class="table_cell">
+                        <tr>
                             <td class="table_cell_heading">4er</td>
-                            <td><button id="score_button4_1" class="button_table" disabled onclick="selectResult(4)"><?php echo $score1[3] ?></button></td>
-                            <td><button id="score_button4_2" class="button_table" disabled onclick="selectResult(4)"><?php echo $score2[3] ?></button></td>
+                            <td class="table_cell"><button id="score_button4_1" class="button_table" disabled onclick="selectResult(4)"><?php echo $score1[3] ?></button></td>
+                            <td class="table_cell"><button id="score_button4_2" class="button_table" disabled onclick="selectResult(4)"><?php echo $score2[3] ?></button></td>
                         </tr>
-                        <tr class="table_cell">
+                        <tr>
                             <td class="table_cell_heading">5er</td>
-                            <td><button id="score_button5_1" class="button_table" disabled onclick="selectResult(5)"><?php echo $score1[4] ?></button></td>
-                            <td><button id="score_button5_2" class="button_table" disabled onclick="selectResult(5)"><?php echo $score2[4] ?></button></td>
+                            <td class="table_cell"><button id="score_button5_1" class="button_table" disabled onclick="selectResult(5)"><?php echo $score1[4] ?></button></td>
+                            <td class="table_cell"><button id="score_button5_2" class="button_table" disabled onclick="selectResult(5)"><?php echo $score2[4] ?></button></td>
                         </tr>
-                        <tr class="table_cell">
+                        <tr>
                             <td class="table_cell_heading">6er</td>
-                            <td><button id="score_button6_1" class="button_table" disabled onclick="selectResult(6)"><?php echo $score1[5] ?></button></td>
-                            <td><button id="score_button6_2" class="button_table" disabled onclick="selectResult(6)"><?php echo $score2[5] ?></button></td>
-                        <tr class="table_cell">
+                            <td class="table_cell"><button id="score_button6_1" class="button_table" disabled onclick="selectResult(6)"><?php echo $score1[5] ?></button></td>
+                            <td class="table_cell"><button id="score_button6_2" class="button_table" disabled onclick="selectResult(6)"><?php echo $score2[5] ?></button></td>
+                        <tr>
                             <td class="table_cell_heading">Summe oben</td>
                             <td class="table_cell"><?php echo $score1[6]?></td>
                             <td class="table_cell"><?php echo $score2[6]?></td>
                         </tr>
-                        <tr class="table_cell">
+                        <tr>
                             <td class="table_cell_heading">Bonus (63+)</td>
                             <td class="table_cell"><?php echo $score1[7]?></td>
                             <td class="table_cell"><?php echo $score2[7]?></td>
                         </tr>
-                        <tr class="table_cell">
+                        <tr>
                             <td class="table_cell_heading">Gesamt oben</td>
                             <td class="table_cell"><?php echo $score1[8]?></td>
                             <td class="table_cell"><?php echo $score2[8]?></td>
@@ -298,47 +311,47 @@
                             <td class="table_cell_heading"><?php echo $player1 ?></td>
                             <td class="table_cell_heading"><?php echo $player2 ?> </td>
                         </tr>
-                        <tr class="table_cell">
+                        <tr>
                             <td class="table_cell_heading">3er Pasch</td>
-                            <td><button id="score_button7_1" class="button_table" disabled onclick="selectResult(7)"><?php echo $score1[9] ?></button></td>
-                            <td><button id="score_button7_2" class="button_table" disabled onclick="selectResult(7)"><?php echo $score2[9] ?></button></td>
+                            <td class="table_cell"><button id="score_button7_1" class="button_table" disabled onclick="selectResult(7)"><?php echo $score1[9] ?></button></td>
+                            <td class="table_cell"><button id="score_button7_2" class="button_table" disabled onclick="selectResult(7)"><?php echo $score2[9] ?></button></td>
                         </tr>
-                        <tr class="table_cell">
+                        <tr>
                             <td class="table_cell_heading">4er Pasch</td>
-                            <td><button id="score_button8_1" class="button_table" disabled onclick="selectResult(8)"><?php echo $score1[10] ?></button></td>
-                            <td><button id="score_button8_2" class="button_table" disabled onclick="selectResult(8)"><?php echo $score2[10] ?></button></td>
+                            <td class="table_cell"><button id="score_button8_1" class="button_table" disabled onclick="selectResult(8)"><?php echo $score1[10] ?></button></td>
+                            <td class="table_cell"><button id="score_button8_2" class="button_table" disabled onclick="selectResult(8)"><?php echo $score2[10] ?></button></td>
                         </tr>
-                        <tr class="table_cell">
+                        <tr>
                             <td class="table_cell_heading">Full House</td>
-                            <td><button id="score_button9_1" class="button_table" disabled onclick="selectResult(9)"><?php echo $score1[11] ?></button></td>
-                            <td><button id="score_button9_2" class="button_table" disabled onclick="selectResult(9)"><?php echo $score2[11] ?></button></td>
+                            <td class="table_cell"><button id="score_button9_1" class="button_table" disabled onclick="selectResult(9)"><?php echo $score1[11] ?></button></td>
+                            <td class="table_cell"><button id="score_button9_2" class="button_table" disabled onclick="selectResult(9)"><?php echo $score2[11] ?></button></td>
                         </tr>
-                        <tr class="table_cell">
+                        <tr>
                             <td class="table_cell_heading">Kleine Straße</td>
-                            <td><button id="score_button10_1" class="button_table" disabled onclick="selectResult(10)"><?php echo $score1[12] ?></button></td>
-                            <td><button id="score_button10_2" class="button_table" disabled onclick="selectResult(10)"><?php echo $score2[12] ?></button></td>
+                            <td class="table_cell"><button id="score_button10_1" class="button_table" disabled onclick="selectResult(10)"><?php echo $score1[12] ?></button></td>
+                            <td class="table_cell"><button id="score_button10_2" class="button_table" disabled onclick="selectResult(10)"><?php echo $score2[12] ?></button></td>
                         </tr>
-                        <tr class="table_cell">
+                        <tr>
                             <td class="table_cell_heading">Große Straße</td>
-                            <td><button id="score_button11_1" class="button_table" disabled onclick="selectResult(11)"><?php echo $score1[13] ?></button></td>
-                            <td><button id="score_button11_2" class="button_table" disabled onclick="selectResult(11)"><?php echo $score2[13] ?></button></td>
+                            <td class="table_cell"><button id="score_button11_1" class="button_table" disabled onclick="selectResult(11)"><?php echo $score1[13] ?></button></td>
+                            <td class="table_cell"><button id="score_button11_2" class="button_table" disabled onclick="selectResult(11)"><?php echo $score2[13] ?></button></td>
                         </tr>
-                        <tr class="table_cell">
+                        <tr>
                             <td class="table_cell_heading">Kniffel</td>
-                            <td><button id="score_button12_1" class="button_table" disabled onclick="selectResult(12)"><?php echo $score1[14] ?></button></td>
-                            <td><button id="score_button12_2" class="button_table" disabled onclick="selectResult(12)"><?php echo $score2[14] ?></button></td>
+                            <td class="table_cell"><button id="score_button12_1" class="button_table" disabled onclick="selectResult(12)"><?php echo $score1[14] ?></button></td>
+                            <td class="table_cell"><button id="score_button12_2" class="button_table" disabled onclick="selectResult(12)"><?php echo $score2[14] ?></button></td>
                         </tr>
-                        <tr class="table_cell">
+                        <tr>
                             <td class="table_cell_heading">Chance</td>
-                            <td><button id="score_button13_1" class="button_table" disabled onclick="selectResult(13)"><?php echo $score1[15] ?></button></td>
-                            <td><button id="score_button13_2" class="button_table" disabled onclick="selectResult(13)"><?php echo $score2[15] ?></button></td>
+                            <td class="table_cell"><button id="score_button13_1" class="button_table" disabled onclick="selectResult(13)"><?php echo $score1[15] ?></button></td>
+                            <td class="table_cell"><button id="score_button13_2" class="button_table" disabled onclick="selectResult(13)"><?php echo $score2[15] ?></button></td>
                         </tr>
-                        <tr class="table_cell">
+                        <tr>
                             <td class="table_cell_heading">Gesamt unten</td>
                             <td class="table_cell"><?php echo $score1[16]?></td>
                             <td class="table_cell"><?php echo $score2[16]?></td>
                         </tr>
-                        <tr class="table_cell">
+                        <tr>
                             <td class="table_cell_heading">Gesamt</td>
                             <td class="table_cell"><?php echo $score1[17]?></td>
                             <td class="table_cell"><?php echo $score2[17]?></td>
@@ -349,7 +362,7 @@
         </div>
 
         <div class="item">
-            <button class="button" onclick="endRound()" style="width: 500px">Runde beenden!</button>
+            <button class="standard_button" onclick="exitGame()" style="width: 300px">Spiel abbrechen</button>
         </div>
 
     </div>
