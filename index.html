@@ -1,0 +1,56 @@
+<script type="importmap">
+    {
+      "imports": {
+        "vue": "https://unpkg.com/vue@3/dist/vue.esm-browser.js"
+      }
+    }
+</script>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+
+    <title>Henris Würfelspiel</title> 
+
+    <link id="style1" rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="app" class="container">
+        <h1 id="h1" class="item">Würfelspiel Kniffel</h1>
+        <p class="item">Spielername 1:</p>
+        <input v-model="player_name_1" class="item" placeholder="Enter player 1 name">
+        <p class="item">Spielername 2:</p>
+        <input v-model="player_name_2" class="item" placeholder="Enter player 2 name">
+        <div class="container">
+            <button @click="startGame" class="button" >Spiel Starten!</button>
+        </div>
+      </div>
+
+</body>
+
+  <script type="module">
+    import { createApp } from 'vue'
+  
+    createApp({
+      data() {
+        return {
+          player_name_1: '',
+            player_name_2: '',
+
+        }
+      },
+      methods: {
+        async startGame() {
+            console.log(this.player_name_1)
+            const xmlhttp = new XMLHttpRequest();
+            xmlhttp.open("GET", "initiate_game.php?spieler1="+this.player_name_1+"&spieler2="+this.player_name_2, true);
+            xmlhttp.send();
+            xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                console.log(this.responseText);
+            }
+            }
+            window.location.href = "game.php";
+        }
+      }
+    }).mount('#app')
+  </script>

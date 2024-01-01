@@ -1,20 +1,12 @@
 <?php
-    $player1 = $_POST['spieler1'];
-    $player2 = $_POST['spieler2'];
+    $player1 = $_GET['spieler1'];
+    $player2 = $_GET['spieler2'];
 
     $servername = "localhost";
     $username = "root";
     $password = "";
 
-    if (!$player1 || !$player2) {
-        header("Location: index.php");
-        exit;
-    }
-    else if ($player1 == $player2) {
-        header("Location: index.php");
-        exit;
-    }
-    else {
+
         // Create connection
         $conn = mysqli_connect($servername, $username, $password, "kniffel");
 
@@ -39,13 +31,5 @@
 
         $conn->close();
 
-        if ($response == 2) {
-            header("Location: game.php");
-            exit;
-        }
-        else {
-            header("Location: index.php");
-            exit;
-        }
-    }
+    
 ?>
