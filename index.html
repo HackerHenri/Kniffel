@@ -27,9 +27,10 @@
 
 </body>
 
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
   <script type="module">
     import { createApp } from 'vue'
-  
+
     createApp({
       data() {
         return {
@@ -41,15 +42,17 @@
       methods: {
         async startGame() {
             console.log(this.player_name_1)
-            const xmlhttp = new XMLHttpRequest();
-            xmlhttp.open("GET", "initiate_game.php?spieler1="+this.player_name_1+"&spieler2="+this.player_name_2, true);
-            xmlhttp.send();
-            xmlhttp.onreadystatechange = function() {
-            if (this.readyState == 4 && this.status == 200) {
-                console.log(this.responseText);
-            }
-            }
-            window.location.href = "game.php";
+          try {
+            const response = await axios.post('http://localhost/initiate_game.php', {
+              player1: this.player_name_1,
+              player2: this.player_name_2
+            });
+
+            console.log(response.data);
+          } catch (error) {
+            console.error(error);
+          }
+          window.location.href = "game.php";
         }
       }
     }).mount('#app')
