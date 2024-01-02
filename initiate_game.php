@@ -1,20 +1,28 @@
 <?php
-    $player1 = $_POST['spieler1'];
-    $player2 = $_POST['spieler2'];
+
+    header('Content-Type: application/json');
+    header('Access-Control-Allow-Origin: *');
+    header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE');
+    $json = file_get_contents('php://input');
+    // echo $json
+    $data = json_decode($json, true);
+    echo $data['player1'];
+    var_dump($data);
+
+    if (isset($data)) {
+    echo json_encode(['status' => 'success', 'message' => 'Message received: ' . $data['player1']]);
+    } else {
+    echo json_encode(['status' => 'error', 'message' => 'No message received']);
+    }
+
+    $player1 = $data['player1'];
+    $player2 = $data['player2'];
 
     $servername = "localhost";
     $username = "root";
     $password = "";
 
-    if (!$player1 || !$player2) {
-        header("Location: index.php");
-        exit;
-    }
-    else if ($player1 == $player2) {
-        header("Location: index.php");
-        exit;
-    }
-    else {
+
         // Create connection
         $conn = mysqli_connect($servername, $username, $password, "kniffel");
 
@@ -39,13 +47,5 @@
 
         $conn->close();
 
-        if ($response == 2) {
-            header("Location: game.php");
-            exit;
-        }
-        else {
-            header("Location: index.php");
-            exit;
-        }
-    }
+    
 ?>
