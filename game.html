@@ -43,18 +43,16 @@
                         <tr v-for="score in scoreList.slice(0,6)" :key="score.id">
                             <td class="table_cell_heading">{{score.name}}</td>
                             <td class="table_cell"><button class="button_table"
-                                    :class="{ 'button_table_possible': score.possibe_player1}"
-                                    :disabled="score.locked_player1"
-                                    @click="selectResult(score.id)">{{score.value_player1}}</button></td>
+                                    :class="{ 'button_table_possible': score.possible[0]}" :disabled="score.locked[0]"
+                                    @click="selectResult(score.id)">{{score.value[0]}}</button></td>
                             <td class="table_cell"><button class="button_table"
-                                    :class="{ 'button_table_possible': score.possibe_player1}"
-                                    :disabled="score.locked_player2"
-                                    @click="selectResult(score.id)">{{score.value_player2}}</button></td>
+                                    :class="{ 'button_table_possible': score.possible[1]}" :disabled="score.locked[1]"
+                                    @click="selectResult(score.id)">{{score.value[1]}}</button></td>
                         </tr>
                         <tr v-for="score in scoreList.slice(6,9)" :key="score.id">
                             <td class="table_cell_heading">{{score.name}}</td>
-                            <td class="table_cell"> {{score.value_player1}} </td>
-                            <td class="table_cell"> {{score.value_player2}} </td>
+                            <td class="table_cell"> {{score.value[0]}} </td>
+                            <td class="table_cell"> {{score.value[1]}} </td>
                         </tr>
                     </tbody>
                 </table>
@@ -70,18 +68,16 @@
                         <tr v-for="score in scoreList.slice(9,16)" :key="score.id">
                             <td class="table_cell_heading">{{score.name}}</td>
                             <td class="table_cell"><button class="button_table"
-                                    :class="{ 'button_table_possible': score.possibe_player1}"
-                                    :disabled="score.locked_player1"
-                                    @click="selectResult(score.id)">{{score.value_player1}}</button></td>
+                                    :class="{ 'button_table_possible': score.possible[0]}" :disabled="score.locked[0]"
+                                    @click="selectResult(score.id)">{{score.value[0]}}</button></td>
                             <td class="table_cell"><button class="button_table"
-                                    :class="{ 'button_table_possible': score.possibe_player1}"
-                                    :disabled="score.locked_player2"
-                                    @click="selectResult(score.id)">{{score.value_player2}}</button></td>
+                                    :class="{ 'button_table_possible': score.possible[1]}" :disabled="score.locked[1]"
+                                    @click="selectResult(score.id)">{{score.value[1]}}</button></td>
                         </tr>
                         <tr v-for="score in scoreList.slice(16)" :key="score.id">
                             <td class="table_cell_heading">{{score.name}}</td>
-                            <td class="table_cell"> {{score.value_player1}} </td>
-                            <td class="table_cell"> {{score.value_player2}} </td>
+                            <td class="table_cell"> {{score.value[0]}} </td>
+                            <td class="table_cell"> {{score.value[1]}} </td>
                         </tr>
                     </tbody>
                 </table>
@@ -96,7 +92,7 @@
             return {
                 rollCounter: 0,
                 allDisabled: true,
-                activePlayer: 1,
+                activePlayer: 0,
                 player_name_1: 'Standard Player 1',
                 player_name_2: 'Standard Player 2',
                 buttonList: [
@@ -130,182 +126,128 @@
                     {
                         id: 1,
                         name: "1er",
-                        value_player1: 0,
-                        value_player2: 0,
-                        locked_player1: false,
-                        locked_player2: false,
-                        possibe_player1: false,
-                        possibe_player2: false
+                        value: [0, 0],
+                        locked: [false, true],
+                        possible: [false, false]
                     },
                     {
                         id: 2,
                         name: "2er",
-                        value_player1: 0,
-                        value_player2: 0,
-                        locked_player1: false,
-                        locked_player2: false,
-                        possibe_player1: false,
-                        possibe_player2: false
+                        value: [0, 0],
+                        locked: [false, true],
+                        possible: [false, false]
                     },
                     {
                         id: 3,
                         name: "3er",
-                        value_player1: 0,
-                        value_player2: 0,
-                        locked_player1: false,
-                        locked_player2: false,
-                        possibe_player1: false,
-                        possibe_player2: false
+                        value: [0, 0],
+                        locked: [false, true],
+                        possible: [false, false]
                     },
                     {
                         id: 4,
                         name: "4er",
-                        value_player1: 0,
-                        value_player2: 0,
-                        locked_player1: false,
-                        locked_player2: false,
-                        possibe_player1: false,
-                        possibe_player2: false
+                        value: [0, 0],
+                        locked: [false, true],
+                        possible: [false, false]
                     },
                     {
                         id: 5,
                         name: "5er",
-                        value_player1: 0,
-                        value_player2: 0,
-                        locked_player1: false,
-                        locked_player2: false,
-                        possibe_player1: false,
-                        possibe_player2: false
+                        value: [0, 0],
+                        locked: [false, true],
+                        possible: [false, false]
                     },
                     {
                         id: 6,
                         name: "6er",
-                        value_player1: 0,
-                        value_player2: 0,
-                        locked_player1: false,
-                        locked_player2: false,
-                        possibe_player1: false,
-                        possibe_player2: false
+                        value: [0, 0],
+                        locked: [false, true],
+                        possible: [false, false]
                     },
                     {
                         id: 6,
                         name: "Summe Oben",
-                        value_player1: 0,
-                        value_player2: 0,
-                        locked_player1: false,
-                        locked_player2: false,
-                        possibe_player1: false,
-                        possibe_player2: false
+                        value: [0, 0],
+                        locked: [false, true],
+                        possible: [false, false]
                     },
                     {
                         id: 7,
                         name: "Bonus (63+)",
-                        value_player1: 0,
-                        value_player2: 0,
-                        locked_player1: false,
-                        locked_player2: false,
-                        possibe_player1: false,
-                        possibe_player2: false
+                        value: [0, 0],
+                        locked: [false, true],
+                        possible: [false, false]
                     },
                     {
                         id: 8,
                         name: "Gesamt Oben",
-                        value_player1: 0,
-                        value_player2: 0,
-                        locked_player1: false,
-                        locked_player2: false,
-                        possibe_player1: false,
-                        possibe_player2: false
+                        value: [0, 0],
+                        locked: [false, true],
+                        possible: [false, false]
                     },
                     {
                         id: 9,
                         name: "3er Pasch",
-                        value_player1: 0,
-                        value_player2: 0,
-                        locked_player1: false,
-                        locked_player2: false,
-                        possibe_player1: false,
-                        possibe_player2: false
+                        value: [0, 0],
+                        locked: [false, true],
+                        possible: [false, false]
                     },
                     {
                         id: 10,
                         name: "4er Pasch",
-                        value_player1: 0,
-                        value_player2: 0,
-                        locked_player1: false,
-                        locked_player2: false,
-                        possibe_player1: false,
-                        possibe_player2: false
+                        value: [0, 0],
+                        locked: [false, true],
+                        possible: [false, false]
                     },
                     {
                         id: 11,
                         name: "Full House",
-                        value_player1: 0,
-                        value_player2: 0,
-                        locked_player1: false,
-                        locked_player2: false,
-                        possibe_player1: false,
-                        possibe_player2: false
+                        value: [0, 0],
+                        locked: [false, true],
+                        possible: [false, false]
                     },
                     {
                         id: 12,
                         name: "Kleine Straße",
-                        value_player1: 0,
-                        value_player2: 0,
-                        locked_player1: false,
-                        locked_player2: false,
-                        possibe_player1: false,
-                        possibe_player2: false
+                        value: [0, 0],
+                        locked: [false, true],
+                        possible: [false, false]
                     },
                     {
                         id: 13,
                         name: "Große Straße",
-                        value_player1: 0,
-                        value_player2: 0,
-                        locked_player1: false,
-                        locked_player2: false,
-                        possibe_player1: false,
-                        possibe_player2: false
+                        value: [0, 0],
+                        locked: [false, true],
+                        possible: [false, false]
                     },
                     {
                         id: 14,
                         name: "Kniffel",
-                        value_player1: 0,
-                        value_player2: 0,
-                        locked_player1: false,
-                        locked_player2: false,
-                        possibe_player1: false,
-                        possibe_player2: false
+                        value: [0, 0],
+                        locked: [false, true],
+                        possible: [false, false]
                     },
                     {
                         id: 15,
                         name: "Chance",
-                        value_player1: 0,
-                        value_player2: 0,
-                        locked_player1: false,
-                        locked_player2: false,
-                        possibe_player1: false,
-                        possibe_player2: false
+                        value: [0, 0],
+                        locked: [false, true],
+                        possible: [false, false]
                     },
                     {
                         id: 16,
                         name: "Gesamt Unten",
-                        value_player1: 0,
-                        value_player2: 0,
-                        locked_player1: false,
-                        locked_player2: false,
-                        possibe_player1: false,
-                        possibe_player2: false
+                        value: [0, 0],
+                        locked: [false, true],
+                        possible: [false, false]
                     },
                     {
                         id: 17,
                         name: "Gesamt",
-                        value_player1: 0,
-                        value_player2: 0,
-                        locked_player1: false,
-                        locked_player2: false,
-                        possibe_player1: false,
-                        possibe_player2: false
+                        value: [0, 0],
+                        locked: [false, true],
+                        possible: [false, false]
                     }
 
                 ]
@@ -325,6 +267,7 @@
                 }
             },
             async rollDices() {
+                console.log(this.activePlayer)
                 this.allDisabled = false
                 for (let i = 0; i < this.buttonList.length; i++) {
                     if (this.buttonList[i].locked == false) {
@@ -359,42 +302,63 @@
                     console.error(error);
                 }
                 // decode response --> should be complete round
+
+                // debug code only
+                if (this.activePlayer == 0) {
+                    this.activePlayer = 1
+                    for (var i = 0; i < this.scoreList.length; i++) {
+                        this.scoreList[i].locked[0] = true
+                        this.scoreList[i].locked[1] = false
+
+                    }
+                }
+                else {
+                    this.activePlayer = 0
+                    for (var i = 0; i < this.scoreList.length; i++) {
+                        this.scoreList[i].locked[1] = true
+                        this.scoreList[i].locked[0] = false
+
+                    }
+                }
+
             },
 
             checkSpecialScore() {
                 for (var i = 0; i < this.scoreList.length; i++) {
-                    this.scoreList[i].possibe_player1 = false
-                    this.scoreList[i].possibe_player2 = false
+                    this.scoreList[i].possible[0] = false
+                    this.scoreList[i].possible[1] = false
                 }
+
                 // check for special score buttons
                 for (var i = 0; i < 6; i++) {
-                    if (this.scoreList[i].locked_player1 == false) {
-                        this.scoreList[i].possibe_player1 = true
+
+                    if (this.scoreList[i].locked[this.activePlayer] == false) {
+                        this.scoreList[i].possible[this.activePlayer] = true
                     }
-                    if (this.scoreList[i].locked_player2 == false) {
-                        this.scoreList[i].possibe_player2 = true
+                    if (this.scoreList[i].locked[this.activePlayer] == false) {
+                        this.scoreList[i].possible[this.activePlayer] = true
                     }
                 }
-                if (this.scoreList[9].locked_player1 == false && this.checkPasch(3)) {
-                    this.scoreList[9].possibe_player1 = true
+                if (this.scoreList[9].locked[this.activePlayer] == false && this.checkPasch(3)) {
+                    this.scoreList[9].possible[this.activePlayer] = true
                 }
-                if (this.scoreList[10].locked_player1 == false && this.checkPasch(4)) {
-                    this.scoreList[10].possibe_player1 = true
+                if (this.scoreList[10].locked[this.activePlayer] == false && this.checkPasch(4)) {
+                    this.scoreList[10].possible[this.activePlayer] = true
                 }
-                if (this.scoreList[11].locked_player1 == false && this.checkFullHouse()) {
-                    this.scoreList[11].possibe_player1 = true
+                if (this.scoreList[11].locked[this.activePlayer] == false && this.checkFullHouse()) {
+                    this.scoreList[11].possible[this.activePlayer] = true
                 }
-                if (this.scoreList[12].locked_player1 == false && this.checkStreet(3)) {
-                    this.scoreList[12].possibe_player1 = true
+                if (this.scoreList[12].locked[this.activePlayer] == false && this.checkStreet(3)) {
+                    this.scoreList[12].possible[this.activePlayer] = true
                 }
-                if (this.scoreList[13].locked_player1 == false && this.checkStreet(4)) {
-                    this.scoreList[13].possibe_player1 = true
+                if (this.scoreList[13].locked[this.activePlayer] == false && this.checkStreet(4)) {
+                    this.scoreList[13].possible[this.activePlayer] = true
                 }
-                if (this.scoreList[14].locked_player1 == false && this.checkPasch(5)) {
-                    this.scoreList[14].possibe_player1 = true
+                if (this.scoreList[14].locked[this.activePlayer] == false && this.checkPasch(5)) {
+                    this.scoreList[14].possible[this.activePlayer] = true
                 }
-                if (this.scoreList[15].locked_player1 == false) {
-                    this.scoreList[15].possibe_player1 = true
+                if (this.scoreList[15].locked[this.activePlayer] == false) {
+                    this.scoreList[15].possible[this.activePlayer] = true
                 }
 
             },
