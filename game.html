@@ -21,10 +21,9 @@
             <div class="item" style="flex-flow: column">
                 <div v-for="button in buttonList" :key="button.id">
                     <button v-if="button.locked" class="dice"
-                        :style="{ backgroundImage: 'url(images/dice' + button.value + '.png)' }"
-                        @click="holdDice(button.id)" :disabled="allDisabled"> </button>
-                    <button v-else class="dice"
                         :style="{ backgroundImage: 'url(images/dice' + button.value + '_marked.png)' }"
+                        @click="holdDice(button.id)" :disabled="allDisabled"> </button>
+                    <button v-else class="dice" :style="{ backgroundImage: 'url(images/dice' + button.value + '.png)' }"
                         @click="holdDice(button.id)" :disabled="allDisabled"> </button>
 
                 </div>
@@ -43,8 +42,14 @@
                     <tbody>
                         <tr v-for="score in scoreList.slice(0,6)" :key="score.id">
                             <td class="table_cell_heading">{{score.name}}</td>
-                            <td class="table_cell"><button  :class="{ 'button_table_possible': score.possibe_player1,  'button_table': !score.possibe_player1}" :disabled="score.locked_player1" @click="selectResult(score.id)" >{{score.value_player1}}</button></td>
-                            <td class="table_cell"><button class="button_table" :disabled="score.locked_player2" @click="selectResult(score.id)">{{score.value_player2}}</button></td>
+                            <td class="table_cell"><button class="button_table"
+                                    :class="{ 'button_table_possible': score.possibe_player1}"
+                                    :disabled="score.locked_player1"
+                                    @click="selectResult(score.id)">{{score.value_player1}}</button></td>
+                            <td class="table_cell"><button class="button_table"
+                                    :class="{ 'button_table_possible': score.possibe_player1}"
+                                    :disabled="score.locked_player2"
+                                    @click="selectResult(score.id)">{{score.value_player2}}</button></td>
                         </tr>
                         <tr v-for="score in scoreList.slice(6,9)" :key="score.id">
                             <td class="table_cell_heading">{{score.name}}</td>
@@ -64,8 +69,14 @@
                     <tbody>
                         <tr v-for="score in scoreList.slice(9,16)" :key="score.id">
                             <td class="table_cell_heading">{{score.name}}</td>
-                            <td class="table_cell"><button class="button_table" :disabled="score.locked_player1" @click="selectResult(score.id)" >{{score.value_player1}}</button></td>
-                            <td class="table_cell"><button class="button_table" :disabled="score.locked_player2" @click="selectResult(score.id)">{{score.value_player2}}</button></td>
+                            <td class="table_cell"><button class="button_table"
+                                    :class="{ 'button_table_possible': score.possibe_player1}"
+                                    :disabled="score.locked_player1"
+                                    @click="selectResult(score.id)">{{score.value_player1}}</button></td>
+                            <td class="table_cell"><button class="button_table"
+                                    :class="{ 'button_table_possible': score.possibe_player1}"
+                                    :disabled="score.locked_player2"
+                                    @click="selectResult(score.id)">{{score.value_player2}}</button></td>
                         </tr>
                         <tr v-for="score in scoreList.slice(16)" :key="score.id">
                             <td class="table_cell_heading">{{score.name}}</td>
@@ -74,8 +85,8 @@
                         </tr>
                     </tbody>
                 </table>
+            </div>
         </div>
-    </div>
 </body>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script type="module">
@@ -91,206 +102,206 @@
                 buttonList: [
                     {
                         id: 1,
-                        locked: true,
+                        locked: false,
                         value: 1
                     },
                     {
                         id: 2,
-                        locked: true,
+                        locked: false,
                         value: 2
                     },
                     {
                         id: 3,
-                        locked: true,
+                        locked: false,
                         value: 3
                     },
                     {
                         id: 4,
-                        locked: true,
+                        locked: false,
                         value: 4
                     },
                     {
                         id: 5,
-                        locked: true,
+                        locked: false,
                         value: 5
                     }
                 ],
                 scoreList: [
                     {
-                        id:1,
-                        name:"1er",
-                        value_player1:0,
-                        value_player2:0,
+                        id: 1,
+                        name: "1er",
+                        value_player1: 0,
+                        value_player2: 0,
                         locked_player1: false,
                         locked_player2: false,
                         possibe_player1: false,
                         possibe_player2: false
                     },
                     {
-                        id:2,
-                        name:"2er",
-                        value_player1:0,
-                        value_player2:0,
+                        id: 2,
+                        name: "2er",
+                        value_player1: 0,
+                        value_player2: 0,
                         locked_player1: false,
                         locked_player2: false,
                         possibe_player1: false,
                         possibe_player2: false
                     },
                     {
-                        id:3,
-                        name:"3er",
-                        value_player1:0,
-                        value_player2:0,
+                        id: 3,
+                        name: "3er",
+                        value_player1: 0,
+                        value_player2: 0,
                         locked_player1: false,
                         locked_player2: false,
                         possibe_player1: false,
                         possibe_player2: false
                     },
                     {
-                        id:4,
-                        name:"4er",
-                        value_player1:0,
-                        value_player2:0,
+                        id: 4,
+                        name: "4er",
+                        value_player1: 0,
+                        value_player2: 0,
                         locked_player1: false,
                         locked_player2: false,
                         possibe_player1: false,
                         possibe_player2: false
                     },
                     {
-                        id:5,
-                        name:"5er",
-                        value_player1:0,
-                        value_player2:0,
+                        id: 5,
+                        name: "5er",
+                        value_player1: 0,
+                        value_player2: 0,
                         locked_player1: false,
                         locked_player2: false,
                         possibe_player1: false,
                         possibe_player2: false
                     },
                     {
-                        id:6,
-                        name:"6er",
-                        value_player1:0,
-                        value_player2:0,
+                        id: 6,
+                        name: "6er",
+                        value_player1: 0,
+                        value_player2: 0,
                         locked_player1: false,
                         locked_player2: false,
                         possibe_player1: false,
                         possibe_player2: false
                     },
                     {
-                        id:6,
-                        name:"Summe Oben",
-                        value_player1:0,
-                        value_player2:0,
+                        id: 6,
+                        name: "Summe Oben",
+                        value_player1: 0,
+                        value_player2: 0,
                         locked_player1: false,
                         locked_player2: false,
                         possibe_player1: false,
                         possibe_player2: false
                     },
                     {
-                        id:7,
-                        name:"Bonus (63+)",
-                        value_player1:0,
-                        value_player2:0,
+                        id: 7,
+                        name: "Bonus (63+)",
+                        value_player1: 0,
+                        value_player2: 0,
                         locked_player1: false,
                         locked_player2: false,
                         possibe_player1: false,
                         possibe_player2: false
                     },
                     {
-                        id:8,
-                        name:"Gesamt Oben",
-                        value_player1:0,
-                        value_player2:0,
+                        id: 8,
+                        name: "Gesamt Oben",
+                        value_player1: 0,
+                        value_player2: 0,
                         locked_player1: false,
                         locked_player2: false,
                         possibe_player1: false,
                         possibe_player2: false
                     },
                     {
-                        id:9,
-                        name:"3er Pasch",
-                        value_player1:0,
-                        value_player2:0,
+                        id: 9,
+                        name: "3er Pasch",
+                        value_player1: 0,
+                        value_player2: 0,
                         locked_player1: false,
                         locked_player2: false,
                         possibe_player1: false,
                         possibe_player2: false
                     },
                     {
-                        id:10,
-                        name:"4er Pasch",
-                        value_player1:0,
-                        value_player2:0,
+                        id: 10,
+                        name: "4er Pasch",
+                        value_player1: 0,
+                        value_player2: 0,
                         locked_player1: false,
                         locked_player2: false,
                         possibe_player1: false,
                         possibe_player2: false
                     },
                     {
-                        id:11,
-                        name:"Full House",
-                        value_player1:0,
-                        value_player2:0,
+                        id: 11,
+                        name: "Full House",
+                        value_player1: 0,
+                        value_player2: 0,
                         locked_player1: false,
                         locked_player2: false,
                         possibe_player1: false,
                         possibe_player2: false
                     },
                     {
-                        id:12,
-                        name:"Kleine Straße",
-                        value_player1:0,
-                        value_player2:0,
+                        id: 12,
+                        name: "Kleine Straße",
+                        value_player1: 0,
+                        value_player2: 0,
                         locked_player1: false,
                         locked_player2: false,
                         possibe_player1: false,
                         possibe_player2: false
                     },
                     {
-                        id:13,
-                        name:"Große Straße",
-                        value_player1:0,
-                        value_player2:0,
+                        id: 13,
+                        name: "Große Straße",
+                        value_player1: 0,
+                        value_player2: 0,
                         locked_player1: false,
                         locked_player2: false,
                         possibe_player1: false,
                         possibe_player2: false
                     },
                     {
-                        id:14,
-                        name:"Kniffel",
-                        value_player1:0,
-                        value_player2:0,
+                        id: 14,
+                        name: "Kniffel",
+                        value_player1: 0,
+                        value_player2: 0,
                         locked_player1: false,
                         locked_player2: false,
                         possibe_player1: false,
                         possibe_player2: false
                     },
                     {
-                        id:15,
-                        name:"Chance",
-                        value_player1:0,
-                        value_player2:0,
+                        id: 15,
+                        name: "Chance",
+                        value_player1: 0,
+                        value_player2: 0,
                         locked_player1: false,
                         locked_player2: false,
                         possibe_player1: false,
                         possibe_player2: false
                     },
                     {
-                        id:16,
-                        name:"Gesamt Unten",
-                        value_player1:0,
-                        value_player2:0,
+                        id: 16,
+                        name: "Gesamt Unten",
+                        value_player1: 0,
+                        value_player2: 0,
                         locked_player1: false,
                         locked_player2: false,
                         possibe_player1: false,
                         possibe_player2: false
                     },
                     {
-                        id:17,
-                        name:"Gesamt",
-                        value_player1:0,
-                        value_player2:0,
+                        id: 17,
+                        name: "Gesamt",
+                        value_player1: 0,
+                        value_player2: 0,
                         locked_player1: false,
                         locked_player2: false,
                         possibe_player1: false,
@@ -302,13 +313,13 @@
         },
         methods: {
             async holdDice(id) {
-                console.log(id)
-                this.buttonList[id - 1].clicked = !this.buttonList[id - 1].clicked
+                console.log(this.buttonList[id - 1].value)
+                this.buttonList[id - 1].locked = !this.buttonList[id - 1].locked
                 try {
                     const response = await axios.post('http://localhost/game.php', {
                         id: id
                     });
-                    console.log(response.data);
+                    //console.log(response.data);
                 } catch (error) {
                     console.error(error);
                 }
@@ -320,7 +331,7 @@
                         this.buttonList[i].value = Math.floor(Math.random() * 6) + 1
                     }
                 }
-                // check for score and special score buttons
+                this.checkSpecialScore()
                 this.rollCounter++
                 if (this.rollCounter >= 3) {
                     this.allDisabled = true
@@ -330,36 +341,135 @@
                     const response = await axios.post('http://localhost/game.php', {
                         roll: true
                     });
-                    console.log(response.data);
+                    //console.log(response.data);
                 } catch (error) {
                     console.error(error);
                 }
             },
 
-            async selectResult(id){
+            async selectResult(id) {
                 console.log(id)
                 // send clicked button to server, receive complete round
                 try {
                     const response = await axios.post('http://localhost/game.php', {
                         scoreId: id
                     });
-                    console.log(response.data);
+                    //console.log(response.data);
                 } catch (error) {
                     console.error(error);
                 }
                 // decode response --> should be complete round
             },
 
-            checkSpecialScore(){
+            checkSpecialScore() {
+                for (var i = 0; i < this.scoreList.length; i++) {
+                    this.scoreList[i].possibe_player1 = false
+                    this.scoreList[i].possibe_player2 = false
+                }
                 // check for special score buttons
+                for (var i = 0; i < 6; i++) {
+                    if (this.scoreList[i].locked_player1 == false) {
+                        this.scoreList[i].possibe_player1 = true
+                    }
+                    if (this.scoreList[i].locked_player2 == false) {
+                        this.scoreList[i].possibe_player2 = true
+                    }
+                }
+                if (this.scoreList[9].locked_player1 == false && this.checkPasch(3)) {
+                    this.scoreList[9].possibe_player1 = true
+                }
+                if (this.scoreList[10].locked_player1 == false && this.checkPasch(4)) {
+                    this.scoreList[10].possibe_player1 = true
+                }
+                if (this.scoreList[11].locked_player1 == false && this.checkFullHouse()) {
+                    this.scoreList[11].possibe_player1 = true
+                }
+                if (this.scoreList[12].locked_player1 == false && this.checkStreet(3)) {
+                    this.scoreList[12].possibe_player1 = true
+                }
+                if (this.scoreList[13].locked_player1 == false && this.checkStreet(4)) {
+                    this.scoreList[13].possibe_player1 = true
+                }
+                if (this.scoreList[14].locked_player1 == false && this.checkPasch(5)) {
+                    this.scoreList[14].possibe_player1 = true
+                }
+                if (this.scoreList[15].locked_player1 == false) {
+                    this.scoreList[15].possibe_player1 = true
+                }
 
+            },
+            checkNumberFrequency(number, freq) {
+                var count = 0;
+                for (var i = 0; i < this.buttonList.length; i++) {
+                    if (this.buttonList[i].value == number) {
+                        count++;
+                        if (count >= freq) {
+                            return true;
+                        }
+                    }
+                }
+                return false;
+            },
+            checkPasch(freq) {
+                for (var i = 1; i <= 6; i++) {
+                    if (this.checkNumberFrequency(i, freq)) {
+                        return true;
+                    }
+                }
+                return false;
+            },
+            checkFullHouse() {
+                var counter = 0;
+                var counter2 = 0;
+                for (var i = 0; i < this.buttonList.length; i++) {
+                    if (checkNumberFrequency(this.buttonList[i].value, 3)) {
+                        counter++;
+                    }
+                    else if (checkNumberFrequency(this.buttonList[i].value, 2)) {
+                        counter2++;
+                    }
+                    else {
+                        return false;
+                    }
+                }
+                if ((counter > 0) && (counter2 > 0)) {
+                    console.log("Full House");
+                    return true;
+
+                }
+                else {
+                    return false;
+                }
+            },
+            checkStreet(n) {
+                // für n = 3: 1,2,3,4 oder 2,3,4,5 oder 3,4,5,6
+                // für n = 4: 1,2,3,4,5 oder 2,3,4,5,6
+                var diceScore_sort = [0, 0, 0, 0, 0]
+                for (var i = 0; i < this.buttonList.length; i++) {
+                    diceScore_sort[i] = this.buttonList[i].value;
+                }
+                var diceScore_sort = diceScore_sort.sort();
+                var counter = 0;
+                for (var i = 0; i < diceScore_sort.length; i++) {
+                    if (diceScore_sort[i] == diceScore_sort[i + 1] - 1) {
+                        counter++;
+                    }
+                }
+                if (counter >= n) {
+                    console.log(n + "er " + "Street");
+                    return true;
+                }
+                else {
+                    return false;
+                }
             }
 
 
         },
-        mounted(){
+        mounted() {
             // get game state from server and update js variables
             console.log("mounted")
+
         }
     }).mount('#app')
 </script>

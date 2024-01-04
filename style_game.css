@@ -46,15 +46,6 @@
     color: black;
 }
 
-.button_table_possible:hover {
-    background-color: rgb(14, 122, 254, 0.8);
-    color: white;
-}
-
-.button_table_possible:disabled {
-    background-color: lightgray;
-    color: black;
-}
 
 .standard_button:hover {
     background-color: rgb(14, 122, 254, 0.8);
@@ -81,18 +72,7 @@
     border-radius: 5px;
 }
 .button_table_possible {
-    background-color: gray;
-    border: 2px solid black;
     border-color: red;
-    color: white;
-    margin: 2px;
-    width: 140px;
-    height: 30px;
-    text-align: center;
-    display: inline-block;
-    overflow: auto;
-    font-size: 20px;
-    border-radius: 5px;
 }
 
 .table_cell {
