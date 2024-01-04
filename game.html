@@ -17,7 +17,6 @@
 <body>
     <div id="app" class="container">
         <h1 class="item">Kniffelspaß!</h1>
-
         <div class="item">
             <div class="item" style="flex-flow: column">
                 <div v-for="button in buttonList" :key="button.id">
@@ -44,8 +43,8 @@
                     <tbody>
                         <tr v-for="score in scoreList.slice(0,6)" :key="score.id">
                             <td class="table_cell_heading">{{score.name}}</td>
-                            <td class="table_cell"><button class="button_table" :disabled="score.locked_player1" @click="selectResult(1)" >{{score.value_player1}}</button></td>
-                            <td class="table_cell"><button class="button_table" :disabled="score.locked_player2" @click="selectResult(1)">{{score.value_player2}}</button></td>
+                            <td class="table_cell"><button  :class="{ 'button_table_possible': score.possibe_player1,  'button_table': !score.possibe_player1}" :disabled="score.locked_player1" @click="selectResult(score.id)" >{{score.value_player1}}</button></td>
+                            <td class="table_cell"><button class="button_table" :disabled="score.locked_player2" @click="selectResult(score.id)">{{score.value_player2}}</button></td>
                         </tr>
                         <tr v-for="score in scoreList.slice(6,9)" :key="score.id">
                             <td class="table_cell_heading">{{score.name}}</td>
@@ -65,8 +64,8 @@
                     <tbody>
                         <tr v-for="score in scoreList.slice(9,16)" :key="score.id">
                             <td class="table_cell_heading">{{score.name}}</td>
-                            <td class="table_cell"><button class="button_table" :disabled="score.locked_player1" @click="selectResult(1)" >{{score.value_player1}}</button></td>
-                            <td class="table_cell"><button class="button_table" :disabled="score.locked_player2" @click="selectResult(1)">{{score.value_player2}}</button></td>
+                            <td class="table_cell"><button class="button_table" :disabled="score.locked_player1" @click="selectResult(score.id)" >{{score.value_player1}}</button></td>
+                            <td class="table_cell"><button class="button_table" :disabled="score.locked_player2" @click="selectResult(score.id)">{{score.value_player2}}</button></td>
                         </tr>
                         <tr v-for="score in scoreList.slice(16)" :key="score.id">
                             <td class="table_cell_heading">{{score.name}}</td>
@@ -123,7 +122,9 @@
                         value_player1:0,
                         value_player2:0,
                         locked_player1: false,
-                        locked_player2: false
+                        locked_player2: false,
+                        possibe_player1: false,
+                        possibe_player2: false
                     },
                     {
                         id:2,
@@ -131,7 +132,9 @@
                         value_player1:0,
                         value_player2:0,
                         locked_player1: false,
-                        locked_player2: false
+                        locked_player2: false,
+                        possibe_player1: false,
+                        possibe_player2: false
                     },
                     {
                         id:3,
@@ -139,7 +142,9 @@
                         value_player1:0,
                         value_player2:0,
                         locked_player1: false,
-                        locked_player2: false
+                        locked_player2: false,
+                        possibe_player1: false,
+                        possibe_player2: false
                     },
                     {
                         id:4,
@@ -147,7 +152,9 @@
                         value_player1:0,
                         value_player2:0,
                         locked_player1: false,
-                        locked_player2: false
+                        locked_player2: false,
+                        possibe_player1: false,
+                        possibe_player2: false
                     },
                     {
                         id:5,
@@ -155,7 +162,9 @@
                         value_player1:0,
                         value_player2:0,
                         locked_player1: false,
-                        locked_player2: false
+                        locked_player2: false,
+                        possibe_player1: false,
+                        possibe_player2: false
                     },
                     {
                         id:6,
@@ -163,7 +172,9 @@
                         value_player1:0,
                         value_player2:0,
                         locked_player1: false,
-                        locked_player2: false
+                        locked_player2: false,
+                        possibe_player1: false,
+                        possibe_player2: false
                     },
                     {
                         id:6,
@@ -171,7 +182,9 @@
                         value_player1:0,
                         value_player2:0,
                         locked_player1: false,
-                        locked_player2: false
+                        locked_player2: false,
+                        possibe_player1: false,
+                        possibe_player2: false
                     },
                     {
                         id:7,
@@ -179,7 +192,9 @@
                         value_player1:0,
                         value_player2:0,
                         locked_player1: false,
-                        locked_player2: false
+                        locked_player2: false,
+                        possibe_player1: false,
+                        possibe_player2: false
                     },
                     {
                         id:8,
@@ -187,7 +202,9 @@
                         value_player1:0,
                         value_player2:0,
                         locked_player1: false,
-                        locked_player2: false
+                        locked_player2: false,
+                        possibe_player1: false,
+                        possibe_player2: false
                     },
                     {
                         id:9,
@@ -195,7 +212,9 @@
                         value_player1:0,
                         value_player2:0,
                         locked_player1: false,
-                        locked_player2: false
+                        locked_player2: false,
+                        possibe_player1: false,
+                        possibe_player2: false
                     },
                     {
                         id:10,
@@ -203,7 +222,9 @@
                         value_player1:0,
                         value_player2:0,
                         locked_player1: false,
-                        locked_player2: false
+                        locked_player2: false,
+                        possibe_player1: false,
+                        possibe_player2: false
                     },
                     {
                         id:11,
@@ -211,7 +232,9 @@
                         value_player1:0,
                         value_player2:0,
                         locked_player1: false,
-                        locked_player2: false
+                        locked_player2: false,
+                        possibe_player1: false,
+                        possibe_player2: false
                     },
                     {
                         id:12,
@@ -219,7 +242,9 @@
                         value_player1:0,
                         value_player2:0,
                         locked_player1: false,
-                        locked_player2: false
+                        locked_player2: false,
+                        possibe_player1: false,
+                        possibe_player2: false
                     },
                     {
                         id:13,
@@ -227,7 +252,9 @@
                         value_player1:0,
                         value_player2:0,
                         locked_player1: false,
-                        locked_player2: false
+                        locked_player2: false,
+                        possibe_player1: false,
+                        possibe_player2: false
                     },
                     {
                         id:14,
@@ -235,7 +262,9 @@
                         value_player1:0,
                         value_player2:0,
                         locked_player1: false,
-                        locked_player2: false
+                        locked_player2: false,
+                        possibe_player1: false,
+                        possibe_player2: false
                     },
                     {
                         id:15,
@@ -243,7 +272,9 @@
                         value_player1:0,
                         value_player2:0,
                         locked_player1: false,
-                        locked_player2: false
+                        locked_player2: false,
+                        possibe_player1: false,
+                        possibe_player2: false
                     },
                     {
                         id:16,
@@ -251,7 +282,9 @@
                         value_player1:0,
                         value_player2:0,
                         locked_player1: false,
-                        locked_player2: false
+                        locked_player2: false,
+                        possibe_player1: false,
+                        possibe_player2: false
                     },
                     {
                         id:17,
@@ -259,7 +292,9 @@
                         value_player1:0,
                         value_player2:0,
                         locked_player1: false,
-                        locked_player2: false
+                        locked_player2: false,
+                        possibe_player1: false,
+                        possibe_player2: false
                     }
 
                 ]
@@ -290,7 +325,7 @@
                 if (this.rollCounter >= 3) {
                     this.allDisabled = true
                 }
-                // send complete round to server
+                // send dice array to server
                 try {
                     const response = await axios.post('http://localhost/game.php', {
                         roll: true
@@ -299,7 +334,32 @@
                 } catch (error) {
                     console.error(error);
                 }
+            },
+
+            async selectResult(id){
+                console.log(id)
+                // send clicked button to server, receive complete round
+                try {
+                    const response = await axios.post('http://localhost/game.php', {
+                        scoreId: id
+                    });
+                    console.log(response.data);
+                } catch (error) {
+                    console.error(error);
+                }
+                // decode response --> should be complete round
+            },
+
+            checkSpecialScore(){
+                // check for special score buttons
+
             }
+
+
+        },
+        mounted(){
+            // get game state from server and update js variables
+            console.log("mounted")
         }
     }).mount('#app')
 </script>

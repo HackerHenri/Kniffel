@@ -55,7 +55,7 @@ function rollDices() {
     }
     sendActiveRound();
   }
-
+  // maybe only send the id of the button and calculate the score on the server side
   function selectResult(field){
     if (field == 1)
     {
@@ -184,6 +184,7 @@ function rollDices() {
       location.reload(true);
   }
 
+  // maybe calculate sums in php (server sided)
   function calculateSums(){
     var sumTop = 0;
     var totalTop = 0;
