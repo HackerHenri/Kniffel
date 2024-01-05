@@ -194,7 +194,8 @@ createApp({
             // send dice array to server
             try {
                 const response = await axios.post('http://localhost/game.php', {
-                    dice: this.buttonList
+                    dice: this.buttonList,
+                    rollCounter: this.rollCounter
                 });
                 //console.log(response.data);
             } catch (error) {
@@ -355,7 +356,21 @@ createApp({
     mounted() {
         // this function gets called when the page is loaded
         // get game state from server and update js variables
-        console.log("mounted")
+        try {
+            const response = axios.get('http://localhost/game.php');
+            //console.log(response.data);
+            //const json = '{"score":[{"id":1,"name":"1er","value":[10,0],"locked":[false,true],"possible":[false,false]},{"id":2,"name":"2er","value":[0,0],"locked":[false,true],"possible":[false,false]},{"id":3,"name":"3er","value":[0,0],"locked":[false,true],"possible":[false,false]},{"id":4,"name":"4er","value":[0,0],"locked":[false,true],"possible":[false,false]},{"id":5,"name":"5er","value":[0,0],"locked":[false,true],"possible":[false,false]},{"id":6,"name":"6er","value":[0,0],"locked":[false,true],"possible":[false,false]},{"id":6,"name":"Summe Oben","value":[0,0],"locked":[false,true],"possible":[false,false]},{"id":7,"name":"Bonus (63+)","value":[0,0],"locked":[false,true],"possible":[false,false]},{"id":8,"name":"Gesamt Oben","value":[0,0],"locked":[false,true],"possible":[false,false]},{"id":9,"name":"3er Pasch","value":[0,0],"locked":[false,true],"possible":[false,false]},{"id":10,"name":"4er Pasch","value":[0,0],"locked":[false,true],"possible":[false,false]},{"id":11,"name":"Full House","value":[0,0],"locked":[false,true],"possible":[false,false]},{"id":12,"name":"Kleine Straße","value":[0,0],"locked":[false,true],"possible":[false,false]},{"id":13,"name":"Große Straße","value":[0,0],"locked":[false,true],"possible":[false,false]},{"id":14,"name":"Kniffel","value":[0,0],"locked":[false,true],"possible":[false,false]},{"id":15,"name":"Chance","value":[0,0],"locked":[false,true],"possible":[false,false]},{"id":16,"name":"Gesamt Unten","value":[0,0],"locked":[false,true],"possible":[false,false]},{"id":17,"name":"Gesamt","value":[0,0],"locked":[false,true],"possible":[false,false]}],"dice":[{"id":1,"locked":false,"value":1},{"id":2,"locked":false,"value":1},{"id":3,"locked":false,"value":1},{"id":4,"locked":false,"value":6},{"id":5,"locked":false,"value":1}],"rollCounter":1,"player_name_1":"Player 1","player_name_2":"Player 2","activePlayer":1}'
+            const data = JSON.parse(response.data)
+            this.scoreList = data.score
+            this.activePlayer = data.activePlayer
+            this.rollCounter = data.rollCounter
+            this.buttonList = data.dice
+            this.player_name_1 = data.player_name_1
+            this.player_name_2 = data.player_name_2
+            this.checkSpecialScore()
+        } catch (error) {
+            console.error(error);
+        }
 
     }
 }).mount('#app')
