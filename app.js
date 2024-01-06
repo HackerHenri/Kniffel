@@ -221,7 +221,6 @@ createApp({
         async selectResult(id) {
 
             // send clicked button id to server, receive complete updated round
-            
             try {
                 const response = await axios.post('http://localhost/game.php', {
                     type: "selectResult",

@@ -4,7 +4,7 @@
 
 .container {
   display: flex;
-  flex-flow: column wrap;
+  flex-flow: column;
   align-items: center;
   align-content: center;
   justify-content: center;
@@ -12,6 +12,8 @@
 }
 
 .item {
+  display: flex;
+  flex-wrap: wrap;
   margin: 10px;
   text-align: center;
   padding: 10px;

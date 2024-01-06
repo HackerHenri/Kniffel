@@ -18,10 +18,14 @@
 <body>
     <div id="app" class="container">
         <h1 id="h1" class="item">Würfelspiel Kniffel</h1>
-        <p class="item">Spielername 1:</p>
-        <input v-model="player_name_1" class="item" placeholder="Enter player 1 name">
-        <p class="item">Spielername 2:</p>
-        <input v-model="player_name_2" class="item" placeholder="Enter player 2 name">
+        <div class="item">
+            <p class="item">Spielername 1:</p>
+            <input v-model="player_name_1" class="item" placeholder="Enter player 1 name">
+        </div>
+        <div class="item">
+            <p class="item">Spielername 2:</p>
+            <input v-model="player_name_2" class="item" placeholder="Enter player 2 name">
+        </div>
         <div class="container">
             <button @click="startGame" class="button" >Spiel Starten!</button>
         </div>
