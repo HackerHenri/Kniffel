@@ -1,0 +1,323 @@
+{
+    "score": [
+        {
+            "id": 1,
+            "name": "1er",
+            "value": [
+                0,
+                0
+            ],
+            "locked": [
+                false,
+                true
+            ],
+            "possible": [
+                false,
+                false
+            ]
+        },
+        {
+            "id": 2,
+            "name": "2er",
+            "value": [
+                0,
+                0
+            ],
+            "locked": [
+                false,
+                true
+            ],
+            "possible": [
+                false,
+                false
+            ]
+        },
+        {
+            "id": 3,
+            "name": "3er",
+            "value": [
+                0,
+                0
+            ],
+            "locked": [
+                false,
+                true
+            ],
+            "possible": [
+                false,
+                false
+            ]
+        },
+        {
+            "id": 4,
+            "name": "4er",
+            "value": [
+                0,
+                0
+            ],
+            "locked": [
+                false,
+                true
+            ],
+            "possible": [
+                false,
+                false
+            ]
+        },
+        {
+            "id": 5,
+            "name": "5er",
+            "value": [
+                0,
+                0
+            ],
+            "locked": [
+                false,
+                true
+            ],
+            "possible": [
+                false,
+                false
+            ]
+        },
+        {
+            "id": 6,
+            "name": "6er",
+            "value": [
+                0,
+                0
+            ],
+            "locked": [
+                false,
+                true
+            ],
+            "possible": [
+                false,
+                false
+            ]
+        },
+        {
+            "id": 6,
+            "name": "Summe Oben",
+            "value": [
+                0,
+                0
+            ],
+            "locked": [
+                false,
+                true
+            ],
+            "possible": [
+                false,
+                false
+            ]
+        },
+        {
+            "id": 7,
+            "name": "Bonus (63+)",
+            "value": [
+                0,
+                0
+            ],
+            "locked": [
+                false,
+                true
+            ],
+            "possible": [
+                false,
+                false
+            ]
+        },
+        {
+            "id": 8,
+            "name": "Gesamt Oben",
+            "value": [
+                0,
+                0
+            ],
+            "locked": [
+                false,
+                true
+            ],
+            "possible": [
+                false,
+                false
+            ]
+        },
+        {
+            "id": 9,
+            "name": "3er Pasch",
+            "value": [
+                0,
+                0
+            ],
+            "locked": [
+                false,
+                true
+            ],
+            "possible": [
+                false,
+                false
+            ]
+        },
+        {
+            "id": 10,
+            "name": "4er Pasch",
+            "value": [
+                0,
+                0
+            ],
+            "locked": [
+                false,
+                true
+            ],
+            "possible": [
+                false,
+                false
+            ]
+        },
+        {
+            "id": 11,
+            "name": "Full House",
+            "value": [
+                0,
+                0
+            ],
+            "locked": [
+                false,
+                true
+            ],
+            "possible": [
+                false,
+                false
+            ]
+        },
+        {
+            "id": 12,
+            "name": "Kleine Straße",
+            "value": [
+                0,
+                0
+            ],
+            "locked": [
+                false,
+                true
+            ],
+            "possible": [
+                false,
+                false
+            ]
+        },
+        {
+            "id": 13,
+            "name": "Große Straße",
+            "value": [
+                0,
+                0
+            ],
+            "locked": [
+                false,
+                true
+            ],
+            "possible": [
+                false,
+                false
+            ]
+        },
+        {
+            "id": 14,
+            "name": "Kniffel",
+            "value": [
+                0,
+                0
+            ],
+            "locked": [
+                false,
+                true
+            ],
+            "possible": [
+                false,
+                false
+            ]
+        },
+        {
+            "id": 15,
+            "name": "Chance",
+            "value": [
+                0,
+                0
+            ],
+            "locked": [
+                false,
+                true
+            ],
+            "possible": [
+                false,
+                false
+            ]
+        },
+        {
+            "id": 16,
+            "name": "Gesamt Unten",
+            "value": [
+                0,
+                0
+            ],
+            "locked": [
+                false,
+                true
+            ],
+            "possible": [
+                false,
+                false
+            ]
+        },
+        {
+            "id": 17,
+            "name": "Gesamt",
+            "value": [
+                0,
+                0
+            ],
+            "locked": [
+                false,
+                true
+            ],
+            "possible": [
+                false,
+                false
+            ]
+        }
+    ],
+    "dice": [
+        {
+            "id": 1,
+            "locked": false,
+            "value": 1
+        },
+        {
+            "id": 2,
+            "locked": false,
+            "value": 1
+        },
+        {
+            "id": 3,
+            "locked": false,
+            "value": 1
+        },
+        {
+            "id": 4,
+            "locked": false,
+            "value": 6
+        },
+        {
+            "id": 5,
+            "locked": false,
+            "value": 1
+        }
+    ],
+    "rollCounter": 1,
+    "player_name_1": "Player 1",
+    "player_name_2": "Player 2",
+    "activePlayer": 1
+}

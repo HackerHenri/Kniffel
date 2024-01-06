@@ -3,6 +3,7 @@
 }
 
 .container {
+    background-color: white;
     display: flex;
     flex-flow: column;
     flex-wrap: wrap;
@@ -46,6 +47,7 @@
     color: black;
 }
 
+
 .standard_button:hover {
     background-color: rgb(14, 122, 254, 0.8);
     color: white;
@@ -70,8 +72,12 @@
     font-size: 20px;
     border-radius: 5px;
 }
+.button_table_possible {
+    border-color: red;
+}
 
 .table_cell {
+    background-color:white;
     border: 1px solid black;
     padding: 5px;
     font-size: 20px;

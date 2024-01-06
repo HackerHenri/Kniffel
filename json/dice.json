@@ -1,0 +1,30 @@
+{
+    "dice": [
+        {
+            "id": 1,
+            "locked": false,
+            "value": 1
+        },
+        {
+            "id": 2,
+            "locked": false,
+            "value": 1
+        },
+        {
+            "id": 3,
+            "locked": false,
+            "value": 1
+        },
+        {
+            "id": 4,
+            "locked": false,
+            "value": 6
+        },
+        {
+            "id": 5,
+            "locked": false,
+            "value": 1
+        }
+    ],
+    "rollCounter": 1
+}
