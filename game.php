@@ -170,7 +170,7 @@
         // 3er Pasch
         if($data['id'] == 10){
             if($scoreValues[$data['id'] - 1] == NULL){
-                $scoreValues[$data['id'] - 1] = echeckPasch($diceValues, 3) ? checkNumberSumAll($diceValues) : 0;
+                $scoreValues[$data['id'] - 1] = checkPasch($diceValues, 3) ? checkNumberSumAll($diceValues) : 0;
                 $validMove = true;
                 $field = "3er_pasch";
             }
@@ -182,7 +182,7 @@
         // 4er Pasch
         if($data['id'] == 11){
             if($scoreValues[$data['id'] - 1] == NULL){
-                $scoreValues[$data['id'] - 1] = echeckPasch($diceValues, 4) ? checkNumberSumAll($diceValues) : 0;
+                $scoreValues[$data['id'] - 1] = checkPasch($diceValues, 4) ? checkNumberSumAll($diceValues) : 0;
                 $validMove = true;
                 $field = "4er_pasch";
             }
@@ -525,7 +525,7 @@
         return $sum;
     }
 
-    function echeckPasch($diceValues, $pasch){
+    function checkPasch($diceValues, $pasch){
         for ($i = 6; $i > 0; $i--) {
             if (checkNumberFrequency($diceValues, $i) >= $pasch) {
                 return true;
